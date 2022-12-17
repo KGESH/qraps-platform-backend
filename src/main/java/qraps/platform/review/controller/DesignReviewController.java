@@ -18,13 +18,13 @@ public class DesignReviewController {
 
     @GetMapping()
     @ResponseBody()
-    public String helathCheck() {
-        return "Hello, red!";
+    public String healthCheckToInferenceEngine() {
+        return designReviewService.healthCheckToInferenceEngine();
     }
 
     @PostMapping("review")
-    public String designReview(@RequestParam("target") String target, @RequestParam("file") MultipartFile file) {
-        designReviewService.designReview(target, file);
+    public String designReview(@RequestParam("target") String target, @RequestParam("file") MultipartFile csvFile) {
+        designReviewService.designReview(target, csvFile);
 
         return "redirect:/";
     }
