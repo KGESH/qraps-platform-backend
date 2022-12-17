@@ -2,6 +2,7 @@ package qraps.platform.review.dto;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -9,10 +10,11 @@ import lombok.ToString;
 public class ReviewDto {
 
 
-    @ToString
     @Getter
     @Setter
-    public static class PositionMapper {
+    @Builder
+    @ToString
+    public static class CsvPositionMapper {
         @CsvBindByPosition(position = 0, required = true)
         private Integer id;
 
@@ -23,10 +25,11 @@ public class ReviewDto {
         private Integer age;
     }
 
-    @ToString
     @Getter
     @Setter
-    public static class NameMapper {
+    @Builder
+    @ToString
+    public static class CsvNameMapper {
         @CsvBindByName(column = "id", required = true)
         private Integer id;
 
@@ -35,5 +38,15 @@ public class ReviewDto {
 
         @CsvBindByName(column = "age", required = true)
         private Integer age;
+    }
+
+
+    @Getter
+    @Setter
+    @ToString
+    public static class InferenceEngineResult {
+        private String propertyName;
+        private Object value;
+        private boolean isValid;
     }
 }
