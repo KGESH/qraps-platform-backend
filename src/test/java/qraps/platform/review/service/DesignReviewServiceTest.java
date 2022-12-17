@@ -3,12 +3,11 @@ package qraps.platform.review.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
+import qraps.platform.utils.csv.MockHelper;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DesignReviewServiceTest {
 
@@ -25,7 +24,9 @@ class DesignReviewServiceTest {
     void CSV_파싱_성공() throws IOException {
         //given
         String fileName = "csv_example.csv";
-        MockMultipartFile mockMultipartFile = getMockMultiPartFile(fileName);
+        byte[] csvFile = MockHelper.getTestMockFileStream(fileName).readAllBytes();
+
+        MockMultipartFile mockMultipartFile = new MockMultipartFile("file", csvFile);
 
         //when
         String result = designReviewService.designReview("target", mockMultipartFile);
@@ -35,10 +36,4 @@ class DesignReviewServiceTest {
     }
 
 
-    private MockMultipartFile getMockMultiPartFile(String fileName) throws IOException {
-        String url = "src/test/java/resources/static/" + fileName;
-
-        FileInputStream fileInputStream = new FileInputStream(new File(url));
-        return new MockMultipartFile("file", fileInputStream.readAllBytes());
-    }
 }
