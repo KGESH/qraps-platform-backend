@@ -1,4 +1,4 @@
-package qraps.platform.utils.csv;
+package qraps.platform.utils;
 
 import qraps.platform.review.dto.ReviewDto;
 
@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MockHelper {
+
+    public static FileInputStream getMockFileStreamByUrl(String fileUrl) throws IOException {
+        return new FileInputStream(new File(fileUrl));
+    }
 
 
     public static FileInputStream getMockFileStream(String fileName) throws IOException {
@@ -25,9 +29,11 @@ public class MockHelper {
         List<ReviewDto.CsvPositionMapper> mockList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             ReviewDto.CsvPositionMapper mockItem = ReviewDto.CsvPositionMapper.builder()
-                    .id(i)
                     .name("mock-name" + i)
-                    .age(25 + i)
+                    .valueOne("value One " + i)
+                    .valueTwo("value Two " + i)
+                    .valueThree("value Three " + i)
+                    .valueFour("value Four " + i)
                     .build();
 
             mockList.add(mockItem);
