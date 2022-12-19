@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
 public class ReviewDto {
 
 
@@ -15,14 +16,21 @@ public class ReviewDto {
     @Builder
     @ToString
     public static class CsvPositionMapper {
-        @CsvBindByPosition(position = 0, required = true)
-        private Integer id;
 
-        @CsvBindByPosition(position = 1, required = true)
+        @CsvBindByPosition(position = 0, required = true)
         private String name;
 
+        @CsvBindByPosition(position = 0, required = true)
+        private String valueOne;
+
+        @CsvBindByPosition(position = 1, required = true)
+        private String valueTwo;
+
         @CsvBindByPosition(position = 2, required = true)
-        private Integer age;
+        private String valueThree;
+
+        @CsvBindByPosition(position = 3, required = true)
+        private String valueFour;
     }
 
     @Getter
@@ -30,21 +38,30 @@ public class ReviewDto {
     @Builder
     @ToString
     public static class CsvNameMapper {
-        @CsvBindByName(column = "id", required = true)
-        private Integer id;
 
         @CsvBindByName(column = "name", required = true)
         private String name;
 
-        @CsvBindByName(column = "age", required = true)
-        private Integer age;
+        @CsvBindByName(column = "valueOne", required = true)
+        private String valueOne;
+
+        @CsvBindByName(column = "valueTwo", required = true)
+        private String valueTwo;
+
+        @CsvBindByName(column = "valueThree", required = true)
+        private String valueThree;
+
+        @CsvBindByName(column = "valueFour", required = true)
+        private String valueFour;
+
     }
 
 
     @Getter
     @Setter
+    @Builder
     @ToString
-    public static class InferenceEngineResult {
+    public static class Result {
         private String propertyName;
         private Object value;
         private boolean isValid;
