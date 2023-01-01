@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검증 결과</title>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"/>
+    <link rel="stylesheet" th:href="@{/web/output.css}">
+</head>
+
+<body>
+<!--nav-->
+<nav class="lg:h-[100px] h-[80px] flex items-center">
+
+    <div class="lg:px-[100px] px-[50px] my-auto w-full flex justify-between ">
+        <a th:href="@{/main}">
+            <img th:src="@{/web/images/logo.svg}" alt="로고이미지">
+        </a>
+        <section class="flex gap-[60px]">
+            <a class="block leading-10 h-[40px]" th:href="@{/business}">사업분야</a>
+            <a class="block leading-10 h-[40px]" th:href="@{/validation_center}">검증센터</a>
+        </section>
+    </div>
+</nav>
+
+<main class="w-full h-fit relative">
+    <section class="lg:h-[80px] h-[70px] lg:px-[100px] px-[50px] flex"
+             style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);">
+        <h1 class="text-white text-xl my-auto">검증 결과</h1>
+    </section>
+
+    <!-- <section class="h-[70vh] w-full lg:px-[100px] px-[50px]"> -->
+    <section class="h-[10vh] w-full lg:px-[100px] px-[50px]">
+        <form action="./validation_result.html" method="post"
+              class="h-full w-full flex flex-col justify-center items-start gap-7">
+
+            <!-- <label class="block mb-2 font-semibold text-xl text-gray-900 dark:text-white" for="file_input">표지
+                지정</label>
+            <div class="w-full">
+                <input
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="file_input" type="file" accept="text/csv">
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">CSV only.</p>
+            </div> -->
+
+            <div class="w-full flex justify-center">
+
+                <button type="button" onclick="javascript:window.print()"
+                        class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    결과 보고서 출력
+                    <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+
+        </form>
+
+    </section>
+</main>
+
+<footer
+        style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;"
+        class="h-fit text-white">
+    <section class="flex justify-around py-10 px-10">
+        <h3 class="text-2xl">CONTACT US</h3>
+        <article class="flex flex-col">
+            <a href="tel:+032-326-0213">032-326-0213</a>
+            <a href="mailto:yblee@qraps.co.kr">chkim@qraps.co.kr</a>
+            <address>
+                인천광역시 부평구 여우재로26번길 28-13
+            </address>
+        </article>
+    </section>
+    <hr>
+    <section class="px-10 py-5 text-center">
+        ⓒ QRAPS 2022. All rights reserved.
+    </section>
+</footer>
+<script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+</body>
+
+</html>

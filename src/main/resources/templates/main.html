@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <link rel="stylesheet" th:href="@{/web/output.css}">
+</head>
+
+<body>
+<!--nav-->
+<nav class="lg:h-[100px] h-[80px] flex items-center">
+
+    <div class="lg:px-[100px] px-[50px] my-auto w-full flex justify-between ">
+        <a th:href="@{/main}">
+            <img th:src="@{/web/images/logo.svg}" alt="로고이미지">
+        </a>
+        <section class="flex gap-[60px]">
+            <a class="block leading-10 h-[40px]" th:href="@{/business}">사업분야</a>
+            <a class="block leading-10 h-[40px]" th:href="@{/validation_center}">검증센터</a>
+        </section>
+    </div>
+</nav>
+
+<main class="w-full h-fit relative">
+    <!--KV-->
+    <img class="absolute left-0 right-0 top-0" width="100%" th:src="@{/web/images/KV.png}" alt="배너이미지">
+    <article class="relative lg:h-[700px] h-[400px] lg:px-[100px] px-[50px]">
+        <div class="text-white lg:pt-[100px] pt-[50px]">
+            <h1 class="text-lg font-semibold">사업소개</h1>
+            <p class="pt-11 lg:w-[36%] w-[50%]">
+                전자회로에 적용되는 소자에 대하여 사전 설계단계에서 소자 적합성을
+                클라우드 서버 시스템을 통한 인공지능 기반의 소프트웨어에 의해 설계
+                자의 자체 검증을 지원하는 사업
+            </p>
+        </div>
+    </article>
+
+    <section class="flex flex-col justify-center items-center gap-3 py-[50px]">
+        <h2 class="font-semibold text-xl">제공되는 소자 적합성 검증 프로세스</h2>
+        <article class="flex gap-7 font-semibold">
+            <div
+                    class="bg-[url('images/table.png')] w-[121px] h-[433px] flex flex-col justify-around text-white text-center">
+                <p>검증<br>준비</p>
+                <p>검증<br>처리</p>
+                <p>결과<br>분석</p>
+            </div>
+
+            <div class="flex flex-col gap-1 items-center text-sm text-center">
+                <div class="w-[261px] flex-1 flex justify-center items-center bg-slate-300 rounded-md">소자 및 회로 설계 자료
+                    입수
+                </div>
+                <img class="w-[21px]" th:src="@{/web/images/polygon.svg}" alt="화살표">
+                <div class="w-[261px] flex-1 flex justify-center items-center bg-slate-300 rounded-md">소자, 제품 개발, 품질
+                    관련 정보 파악
+                </div>
+                <img class="w-[21px]" th:src="@{/web/images/polygon.svg}" alt="화살표">
+                <div class="w-[261px] flex-1 flex justify-center items-center bg-slate-300 rounded-md">소자 설계 값 입력
+                </div>
+                <img class="w-[21px]" th:src="@{/web/images/polygon.svg}" alt="화살표">
+                <div class="w-[261px] flex-1 flex justify-center items-center bg-slate-300 rounded-md">소자 특성 data 평가
+                </div>
+                <img class="w-[21px]" th:src="@{/web/images/polygon.svg}" alt="화살표">
+                <div class="w-[261px] flex-1 flex justify-center items-center bg-slate-300 rounded-md">검증 결과 출력
+                </div>
+                <img class="w-[21px]" th:src="@{/web/images/polygon.svg}" alt="화살표">
+                <div class="w-[261px] flex-1 flex justify-center items-center bg-slate-300 rounded-md">결과 분석 대응
+                </div>
+            </div>
+
+        </article>
+    </section>
+
+
+</main>
+
+<footer
+        style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;"
+        class="h-fit text-white">
+    <section class="flex justify-around py-10 px-10">
+        <h3 class="text-2xl">CONTACT US</h3>
+        <article class="flex flex-col">
+            <a href="tel:+032-326-0213">032-326-0213</a>
+            <a href="mailto:yblee@qraps.co.kr">chkim@qraps.co.kr</a>
+            <address>
+                인천광역시 부평구 여우재로26번길 28-13
+            </address>
+        </article>
+    </section>
+    <hr>
+    <section class="px-10 py-5 text-center">
+        ⓒ QRAPS 2022. All rights reserved.
+    </section>
+</footer>
+
+</body>
+
+</html>
