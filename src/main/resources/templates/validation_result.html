@@ -28,12 +28,12 @@
 <main class="w-full h-fit relative">
     <section class="lg:h-[80px] h-[70px] lg:px-[100px] px-[50px] flex"
              style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);">
-        <h1 class="text-white text-xl my-auto">검증 결과</h1>
+        <h1 class="text-white text-xl my-auto" th:text="'검증 결과: '+ ${validateResult}"></h1>
     </section>
 
     <!-- <section class="h-[70vh] w-full lg:px-[100px] px-[50px]"> -->
     <section class="h-[10vh] w-full lg:px-[100px] px-[50px]">
-        <form action="./validation_result.html" method="post"
+        <form th:action="@{/report}" method="post"
               class="h-full w-full flex flex-col justify-center items-start gap-7">
 
             <!-- <label class="block mb-2 font-semibold text-xl text-gray-900 dark:text-white" for="file_input">표지
@@ -47,7 +47,8 @@
 
             <div class="w-full flex justify-center">
 
-                <button type="button" onclick="javascript:window.print()"
+
+                <button type="submit"
                         class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     결과 보고서 출력
                     <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"

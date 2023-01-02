@@ -34,31 +34,30 @@
     <section class="h-[70vh] w-full lg:px-[100px] px-[50px]">
         <!-- <form action="./validation_result.html" method="get"
             class="h-full w-full flex flex-col justify-center items-start gap-7"> -->
-        <form action="validation_result.html" method="get"
+        <form th:action="@{/review/expert}" th:object="${reviewDto}" method="post" enctype="multipart/form-data"
               class="h-full w-full flex flex-col justify-center items-start">
 
 
-            <label for="valid_target" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">검증 대상
+            <label for="validTarget" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">검증 대상
                 선택</label>
             <!-- <select id="valid_target"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> -->
-            <select id="valid_target"
+            <select id="validTarget" th:name="validTarget"
                     class="mb-7 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>검증 대상을 선택하세요.</option>
-                <option value="IC"> Step-down IC</option>
-                <option value="Transistor">Transistor</option>
-                <option value="Diode">Diode</option>
+                <option th:each="target : ${targets}" th:value="${target}"
+                        th:text="${target.getDescription()}"></option>
             </select>
 
 
-            <label for="target_number"
+            <label for="targetNumber"
                    class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Part#</label>
             <!-- <select id="target_number"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>번호를 선택하세요.</option>
             </select> -->
             <div class="w-full flex mb-7 gap-5 items-center">
-                <select id="target_number"
+                <select id="targetNumber"
                         class="bg-gray-50 border flex-1 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected>번호를 선택하세요.</option>
                 </select>
@@ -75,7 +74,7 @@
             <div class="mb-7 w-full">
                 <input
                         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        id="file_input" type="file" accept="text/csv">
+                        name="file_input" id="file_input" type="file" accept="text/csv">
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">CSV only.</p>
             </div>
 

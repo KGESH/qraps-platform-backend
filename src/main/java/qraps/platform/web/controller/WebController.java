@@ -3,6 +3,10 @@ package qraps.platform.web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import qraps.platform.review.dto.ResponseExpertSystem;
+import qraps.platform.web.controller.dto.ReviewPageDto;
+import qraps.platform.web.controller.dto.ValidateTarget;
 
 @Controller
 public class WebController {
@@ -23,12 +27,26 @@ public class WebController {
     }
 
     @GetMapping("validation_center")
-    public String validationCenterPage() {
+    public String validationCenterPage(Model model) {
+        model.addAttribute("reviewDto", new ReviewPageDto());
+        model.addAttribute("targets", ValidateTarget.values());
         return "validation_center";
     }
 
     @GetMapping("validation_result")
-    public String validationResultPage() {
+    public String validationResultPage(@SessionAttribute(name = "reviewResult", required = false) ResponseExpertSystem.Result reviewResult,
+                                       Model model) {
+
+        if (reviewResult == null) {
+            return "redirect:/main";
+        }
+
+        if (reviewResult.isPass()) {
+            model.addAttribute("validateResult", "PASS");
+        } else {
+            model.addAttribute("validateResult", "FAIL");
+        }
+
         return "validation_result";
     }
 
