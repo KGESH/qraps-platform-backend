@@ -6,9 +6,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public class ReviewDto {
+
+    @Getter
+    @Builder
+    public static class RequestExpertSystem {
+        private String target;
+        private MultipartFile file;
+    }
 
 
     @Getter
@@ -57,6 +65,11 @@ public class ReviewDto {
     }
 
 
+    /**
+     * Jasper studio 템플릿과 맵핑
+     * 템플릿의 프로퍼티 이름과
+     * 클래스 멤버 변수 이름 일치 필요
+     */
     @Getter
     @Setter
     @Builder
@@ -64,6 +77,6 @@ public class ReviewDto {
     public static class Result {
         private String propertyName;
         private Object value;
-        private boolean isValid;
+        private boolean passValidate;
     }
 }
