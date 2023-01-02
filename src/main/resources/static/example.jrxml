@@ -11,16 +11,13 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<parameter name="id" class="java.lang.Integer"/>
-	<parameter name="name" class="java.lang.String"/>
-	<parameter name="age" class="java.lang.Integer"/>
 	<parameter name="title" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer"/>
-	<field name="name" class="java.lang.String"/>
-	<field name="age" class="java.lang.Integer"/>
+	<field name="propertyName" class="java.lang.String"/>
+	<field name="value" class="java.lang.String"/>
+	<field name="passValidate" class="java.lang.Boolean"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -28,7 +25,7 @@
 		<band height="79" splitType="Stretch">
 			<staticText>
 				<reportElement x="150" y="30" width="100" height="30" uuid="4a779c03-a9ae-4ace-82ec-b3abba3de214"/>
-				<text><![CDATA[Example Title]]></text>
+				<text><![CDATA[Target]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="290" y="30" width="100" height="30" uuid="de7bccb1-e25c-4fe0-ad7f-43699b6d8c2e"/>
@@ -40,33 +37,36 @@
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="40" y="20" width="100" height="30" uuid="c86ca9df-3021-44a9-b5bc-933524737ccb"/>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="20" width="100" height="30" uuid="46b19343-2e02-4841-8109-aac825cb8931"/>
+				<text><![CDATA[input valule]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="20" width="100" height="30" uuid="23020978-b8b6-410c-9092-175e7f78b09d"/>
+				<text><![CDATA[Pass]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="127" splitType="Stretch">
-			<staticText>
-				<reportElement x="40" y="30" width="100" height="30" uuid="c86ca9df-3021-44a9-b5bc-933524737ccb"/>
-				<text><![CDATA[id field]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="170" y="30" width="100" height="30" uuid="46b19343-2e02-4841-8109-aac825cb8931"/>
-				<text><![CDATA[name field]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="330" y="30" width="100" height="30" uuid="23020978-b8b6-410c-9092-175e7f78b09d"/>
-				<text><![CDATA[age field]]></text>
-			</staticText>
+		<band height="50" splitType="Stretch">
 			<textField>
-				<reportElement x="40" y="80" width="100" height="30" uuid="b2863c00-4d05-4ee3-b282-ca188c548303"/>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+				<reportElement x="40" y="10" width="100" height="30" uuid="b2863c00-4d05-4ee3-b282-ca188c548303">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{propertyName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="170" y="80" width="100" height="30" uuid="93250230-e130-490a-ae0e-3e2fec588f95"/>
-				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+				<reportElement x="170" y="10" width="100" height="30" uuid="93250230-e130-490a-ae0e-3e2fec588f95"/>
+				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="330" y="80" width="100" height="30" uuid="ec5f3331-23b0-4214-9fe4-7df9ea3efffa"/>
-				<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
+				<reportElement x="330" y="10" width="100" height="30" uuid="ec5f3331-23b0-4214-9fe4-7df9ea3efffa"/>
+				<textFieldExpression><![CDATA[$F{passValidate}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
