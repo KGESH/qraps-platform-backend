@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class ReportDto {
-
     @Getter
     @Setter
     @Builder

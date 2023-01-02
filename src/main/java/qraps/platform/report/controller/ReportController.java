@@ -7,47 +7,37 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import qraps.platform.report.service.ReportResultService;
-
-import java.io.IOException;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import qraps.platform.report.service.ReportService;
+import qraps.platform.review.dto.ResponseExpertSystem;
 
 
 @Controller
 public class ReportController {
-    private final ReportResultService reportResultService;
+    private final ReportService reportService;
 
     @Autowired
-    public ReportController(ReportResultService reportResultService) {
-        this.reportResultService = reportResultService;
+    public ReportController(ReportService reportService) {
+        this.reportService = reportService;
     }
+
 
     /**
      * Todo: handle global exception
      */
     @PostMapping("report")
-    public ResponseEntity<byte[]> printReport(
-            @RequestParam("reportUrl") String reportUrl,
-            @RequestParam(value = "file", required = false) MultipartFile reportCoverPage) throws IOException {
+    public ResponseEntity<byte[]> generateReport(@SessionAttribute("reviewResult") ResponseExpertSystem.Result reviewResult) throws Exception {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE);
-        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"report.pdf\"");
+        String fileName = reviewResult.getTargetName() + "_report.pdf";
+        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"");
 
-        if (reportCoverPage.isEmpty()) {
-            byte[] report = reportResultService.getReport(reportUrl);
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .headers(headers)
-                    .body(report);
-        }
-
-        byte[] reportWithCoverPage = reportResultService.getReportWithCoverPage(reportUrl, reportCoverPage);
+        byte[] report = reportService.generateReport(reviewResult);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .headers(headers)
-                .body(reportWithCoverPage);
+                .body(report);
     }
 
 }
