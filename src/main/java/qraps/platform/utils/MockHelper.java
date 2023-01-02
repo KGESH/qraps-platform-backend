@@ -1,12 +1,11 @@
 package qraps.platform.utils;
 
-import qraps.platform.review.dto.ReviewDto;
+import org.springframework.core.io.ClassPathResource;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
 
 public class MockHelper {
 
@@ -15,31 +14,14 @@ public class MockHelper {
     }
 
 
-    public static FileInputStream getMockFileStream(String fileName) throws IOException {
-        String url = "src/main/resources/static/" + fileName;
-        return new FileInputStream(new File(url));
+    public static InputStream getMockFileStream(String fileName) throws IOException {
+        ClassPathResource resource = new ClassPathResource("static/" + fileName);
+        return resource.getInputStream();
     }
 
     public static FileInputStream getTestMockFileStream(String fileName) throws IOException {
         String url = "src/test/java/resources/static/" + fileName;
         return new FileInputStream(new File(url));
-    }
-
-    public static List<ReviewDto.CsvPositionMapper> getMockResult() {
-        List<ReviewDto.CsvPositionMapper> mockList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            ReviewDto.CsvPositionMapper mockItem = ReviewDto.CsvPositionMapper.builder()
-                    .name("mock-name" + i)
-                    .valueOne("value One " + i)
-                    .valueTwo("value Two " + i)
-                    .valueThree("value Three " + i)
-                    .valueFour("value Four " + i)
-                    .build();
-
-            mockList.add(mockItem);
-        }
-
-        return mockList;
     }
 
 }

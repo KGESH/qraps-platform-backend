@@ -4,11 +4,11 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.stereotype.Service;
 import qraps.platform.report.dto.ReportDto;
+import qraps.platform.review.dto.ResponseExpertSystem;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.utils.MockHelper;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -21,9 +21,16 @@ import java.util.Map;
 public class ReportService {
 
 
+    public byte[] generateReport(ResponseExpertSystem.Result reviewResult) throws Exception {
+        InputStream reportTemplate = getReportTemplate();
+        byte[] report = compileReportToPdf(reviewResult.getTargetName(), reviewResult.getReviewResults(), reportTemplate);
+
+        return report;
+    }
+
     public String generateReport(ReportDto.Generate reportDto, List<ReviewDto.Result> reviewResults) throws Exception {
 
-        FileInputStream reportTemplate = getReportTemplate();
+        InputStream reportTemplate = getReportTemplate();
 
         byte[] report = compileReportToPdf(reportDto.getTargetName() + " : " + reportDto.getReportId(), reviewResults, reportTemplate);
 
@@ -31,25 +38,6 @@ public class ReportService {
         String savedUrl = saveReport(uploadDto);
 
         return savedUrl;
-    }
-
-    /**
-     * Todo: replace to S3
-     */
-    private String saveReport(ReportDto.Upload dto) throws IOException {
-        Path reportUrl = Path.of("src/main/resources/static/", dto.getFileName());
-
-        Path savedUrl = Files.write(reportUrl, dto.getFileBytes());
-
-        return savedUrl.toString();
-    }
-
-
-    public FileInputStream getReportTemplate() throws IOException {
-        /** Todo: replace to real file */
-        FileInputStream mockFileStream = MockHelper.getMockFileStream("example.jrxml");
-
-        return mockFileStream;
     }
 
     private byte[] compileReportToPdf(String title, List<ReviewDto.Result> reviewResults, InputStream jasperReportTemplateFileStream) throws Exception {
@@ -68,6 +56,23 @@ public class ReportService {
         JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
 
         return outputStream.toByteArray();
+    }
+
+
+    /**
+     * Todo: replace to S3
+     */
+    private String saveReport(ReportDto.Upload dto) throws IOException {
+        Path reportUrl = Path.of("src/main/resources/static/", dto.getFileName());
+
+        Path savedUrl = Files.write(reportUrl, dto.getFileBytes());
+
+        return savedUrl.toString();
+    }
+
+
+    public InputStream getReportTemplate() throws IOException {
+        return MockHelper.getMockFileStream("example.jrxml");
     }
 
 
