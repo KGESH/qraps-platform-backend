@@ -1,14 +1,15 @@
 package qraps.platform.review.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 import qraps.platform.report.service.ReportService;
 import qraps.platform.review.dto.ResponseExpertSystem;
 import qraps.platform.review.dto.ReviewDto;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ExpertSystemReviewService {
@@ -24,7 +25,7 @@ public class ExpertSystemReviewService {
     }
 
     public ResponseExpertSystem.Result reviewFromExpertSystem(String target, MultipartFile uploadedFile) {
-        ResponseExpertSystem.Result response = getReviewResultFromExpertSystem(target, uploadedFile);
+        ResponseExpertSystem.Result response = reviewFromExpertSystem(uploadedFile);
         return response;
     }
 
@@ -32,48 +33,51 @@ public class ExpertSystemReviewService {
      * 전문가 시스템에 검증 요청
      * 검증 대상과 엑셀 파일 전달
      */
-    private ResponseExpertSystem.Result getReviewResultFromExpertSystem(String target, MultipartFile uploadedFile) {
-        List<ReviewDto.Result> mockReviewResults = getMockReviewResults();
-
-        return ResponseExpertSystem.Result.builder()
-                .targetName(target)
-                .reviewResults(mockReviewResults)
-                .isPass(true)
-                .build();
-    }
+//    private ResponseExpertSystem.Result getReviewResultFromExpertSystem(String target, MultipartFile uploadedFile) {
+//        List<ReviewDto.Result> mockReviewResults = getMockReviewResults();
+//
+//        return ResponseExpertSystem.Result.builder()
+//                .targetName(target)
+//                .reviewResults(mockReviewResults)
+//                .isPass(true)
+//                .build();
+//    }
 
     /**
      * Todo: replace after demo
      */
-//    private ResponseExpertSystem.Result getReviewResultFromExpertSystem(String target, MultipartFile uploadedFile) {
-//        ReviewDto.RequestExpertSystem requestBody = ReviewDto.RequestExpertSystem.builder()
-//                .target(target)
-//                .file(uploadedFile)
-//                .build();
-//
-//        String url = "http://0.0.0.0:5000/verify";
-//        WebClient apiClient = WebClient.builder().baseUrl(url).build();
-//        return apiClient
-//                .post()
-//                .uri(url)
-//                .bodyValue(requestBody)
-//                .retrieve()
-//                .bodyToMono(ResponseExpertSystem.Result.class)
-//                .block();
-//    }
-    private List<ReviewDto.Result> getMockReviewResults() {
-        List<ReviewDto.Result> mockReviewResults = new ArrayList<>();
-        for (int i = 1; i <= 100; i++) {
-            mockReviewResults.add(
-                    ReviewDto.Result.builder()
-                            .propertyName("property" + i)
-                            .value("value" + i)
-                            .passValidate(true)
-                            .build());
+    private ResponseExpertSystem.Result getReviewResultFromExpertSystem(String target, MultipartFile uploadedFile) {
+        ReviewDto.RequestExpertSystem requestBody = ReviewDto.RequestExpertSystem.builder()
+                .target(target)
+                .file(uploadedFile)
+                .build();
 
-        }
+        String url = "http://expert:5001/verify";
+        WebClient apiClient = WebClient.builder().baseUrl(url).build();
+        return apiClient
+                .post()
+                .uri(url)
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(ResponseExpertSystem.Result.class)
+                .block();
+    }
 
-        return mockReviewResults;
+    private ResponseExpertSystem.Result reviewFromExpertSystem(MultipartFile uploadedFile) {
+        String url = "http://expert:5001/expert/review";
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        builder.part("file", uploadedFile.getResource());
+        System.out.println("Build martipartfile");
+
+        WebClient apiClient = WebClient.builder().baseUrl(url).build();
+        return apiClient
+                .post()
+                .uri(url)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData(builder.build()))
+                .retrieve()
+                .bodyToMono(ResponseExpertSystem.Result.class)
+                .block();
     }
 
 }

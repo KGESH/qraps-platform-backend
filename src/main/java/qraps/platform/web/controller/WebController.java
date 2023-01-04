@@ -41,7 +41,7 @@ public class WebController {
             return "redirect:/main";
         }
 
-        if (reviewResult.isPass()) {
+        if (reviewResult.isPassReview()) {
             model.addAttribute("validateResult", "PASS");
         } else {
             model.addAttribute("validateResult", "FAIL");
