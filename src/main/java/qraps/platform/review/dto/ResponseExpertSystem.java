@@ -1,19 +1,21 @@
 package qraps.platform.review.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
+@AllArgsConstructor
 public class ResponseExpertSystem {
 
     @Getter
     @Setter
-    @Builder
+//    @Builder
     public static class Result {
         private String targetName;
         private List<ReviewDto.Result> reviewResults;
-        private boolean isPass;
+        private boolean passReview;
     }
+
 }

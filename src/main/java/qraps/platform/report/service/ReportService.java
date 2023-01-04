@@ -23,8 +23,7 @@ public class ReportService {
 
     public byte[] generateReport(ResponseExpertSystem.Result reviewResult) throws Exception {
         InputStream reportTemplate = getReportTemplate();
-        byte[] report = compileReportToPdf(reviewResult.getTargetName(), reviewResult.getReviewResults(), reportTemplate);
-
+        byte[] report = compileReportToPdf(reviewResult, reportTemplate);
         return report;
     }
 
@@ -58,6 +57,23 @@ public class ReportService {
         return outputStream.toByteArray();
     }
 
+    private byte[] compileReportToPdf(ResponseExpertSystem.Result reviewResult, InputStream jasperReportTemplateFileStream) throws Exception {
+
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(reviewResult.getReviewResults());
+        JasperReport report = JasperCompileManager.compileReport(jasperReportTemplateFileStream);
+        Map<String, Object> reportParams = new HashMap<>();
+
+
+        String passResult = reviewResult.isPassReview() ? "PASS" : "FAIL";
+        reportParams.put("title", reviewResult.getTargetName());
+        reportParams.put("passResult", passResult);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(report, reportParams, beanCollectionDataSource);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+
+        return outputStream.toByteArray();
+    }
 
     /**
      * Todo: replace to S3

@@ -72,11 +72,21 @@ public class ReviewDto {
      */
     @Getter
     @Setter
-    @Builder
     @ToString
     public static class Result {
-        private String propertyName;
-        private Object value;
+        private String partName;
+        private Object designValue;
         private boolean passValidate;
+
+        public Result() {
+        }
+
+        /**
+         * Jasper report
+         * pass, fail 문자 출력
+         */
+        public String getPassString() {
+            return passValidate ? "O" : "X";
+        }
     }
 }
