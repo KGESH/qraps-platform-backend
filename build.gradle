@@ -29,6 +29,8 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     implementation 'org.apache.poi:poi:3.11'
     implementation 'org.apache.poi:poi-ooxml:3.11'
+    implementation 'com.itextpdf:itext7-core:7.2.4'
+    implementation 'com.itextpdf:html2pdf:4.0.4'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
