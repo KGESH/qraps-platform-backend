@@ -3,6 +3,8 @@ FROM openjdk:11-jdk
 # Set the working directory
 WORKDIR /app
 
+COPY target-images /pdrpic
+
 # Copy the compiled jar file and dependencies
 COPY build/libs/*.jar /app.jar
 
