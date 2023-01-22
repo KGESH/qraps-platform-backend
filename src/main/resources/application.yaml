@@ -2,4 +2,16 @@ spring:
   thymeleaf:
     cache: false
     suffix: .html
-    prefix: classpath:/templates/
+    prefix:
+      - classpath:/templates/
+
+  datasource:
+    url: jdbc:mysql://db:3306/pdr?useUnicode=true&characterEncoding=utf8
+    username: example
+    password: example
+
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
