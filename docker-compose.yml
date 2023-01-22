@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  platform:
+    image: baram987/qraps:latest
+    container_name: platform
+    ports:
+      - "80:8080"
+    depends_on:
+      - db
+    networks:
+      - qraps-network
+
+  expert:
+    image: baram987/expert:latest
+    container_name: expert
+    ports:
+      - "5001:5001"
+    networks:
+      - qraps-network
+
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DB: pdr
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql-init.d:/docker-entrypoint-initdb.d
+      - ./database/mysql:/var/lib/mysql
+    #      - ./database/config:/etc/mysql
+    #      - ./database/mysql-files:/var/lib/mysql-files
+    networks:
+      - qraps-network
+
+
+networks:
+  qraps-network:
+    driver: bridge
