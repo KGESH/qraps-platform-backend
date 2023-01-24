@@ -25,24 +25,6 @@ public class ExpertSystemReviewService {
         this.reportService = reportService;
     }
 
-    public ResponseReviewDto reviewFromExpertSystem(ReviewPageDto reviewDto, MultipartFile uploadedFile) {
-        ResponseReviewDto response = reviewFromExpertSystem(uploadedFile);
-        return response;
-    }
-
-    /**
-     * 전문가 시스템에 검증 요청
-     * 검증 대상과 엑셀 파일 전달
-     */
-//    private ResponseExpertSystem.Result getReviewResultFromExpertSystem(String target, MultipartFile uploadedFile) {
-//        List<ReviewDto.Result> mockReviewResults = getMockReviewResults();
-//
-//        return ResponseExpertSystem.Result.builder()
-//                .targetName(target)
-//                .reviewResults(mockReviewResults)
-//                .isPass(true)
-//                .build();
-//    }
 
     /**
      * Todo: replace after demo
@@ -65,9 +47,12 @@ public class ExpertSystemReviewService {
     }
 
     /**
-     * Expert System에 Excel 파일 전달
+     * Expert System에
+     * 검증 대상, 검증 대상 partNo
+     * Excel 파일 전달
      */
-    private ResponseReviewDto reviewFromExpertSystem(MultipartFile uploadedFile) {
+    public ResponseReviewDto reviewFromExpertSystem(ReviewPageDto reviewDto, MultipartFile uploadedFile) {
+
         String url = "http://expert:5001/expert/review";
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("file", uploadedFile.getResource());
@@ -75,7 +60,10 @@ public class ExpertSystemReviewService {
         WebClient apiClient = WebClient.builder().baseUrl(url).build();
         return apiClient
                 .post()
-                .uri(url)
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("validTarget", reviewDto.getValidTarget().getTarget())
+                        .queryParam("partNo", reviewDto.getPartNo())
+                        .build())
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(builder.build()))
                 .retrieve()
