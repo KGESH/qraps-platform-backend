@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import qraps.platform.report.service.ReportService;
-import qraps.platform.review.dto.ResponseExpertSystem;
+import qraps.platform.review.dto.ResponseReviewDto;
 
 
 @Controller
@@ -26,7 +26,7 @@ public class ReportController {
      * Todo: handle global exception
      */
     @PostMapping("report")
-    public ResponseEntity<byte[]> generateReport(@SessionAttribute("reviewResult") ResponseExpertSystem.Result reviewResult) throws Exception {
+    public ResponseEntity<byte[]> generateReport(@SessionAttribute("reviewResult") ResponseReviewDto reviewResult) throws Exception {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE);

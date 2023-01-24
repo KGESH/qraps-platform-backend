@@ -4,7 +4,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.stereotype.Service;
 import qraps.platform.report.dto.ReportDto;
-import qraps.platform.review.dto.ResponseExpertSystem;
+import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.utils.MockHelper;
 
@@ -21,7 +21,7 @@ import java.util.Map;
 public class ReportService {
 
 
-    public byte[] generateReport(ResponseExpertSystem.Result reviewResult) throws Exception {
+    public byte[] generateReport(ResponseReviewDto reviewResult) throws Exception {
         InputStream reportTemplate = getReportTemplate();
         byte[] report = compileReportToPdf(reviewResult, reportTemplate);
         return report;
@@ -57,7 +57,7 @@ public class ReportService {
         return outputStream.toByteArray();
     }
 
-    private byte[] compileReportToPdf(ResponseExpertSystem.Result reviewResult, InputStream jasperReportTemplateFileStream) throws Exception {
+    private byte[] compileReportToPdf(ResponseReviewDto reviewResult, InputStream jasperReportTemplateFileStream) throws Exception {
 
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(reviewResult.getReviewResults());
         JasperReport report = JasperCompileManager.compileReport(jasperReportTemplateFileStream);
