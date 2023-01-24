@@ -8,8 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import qraps.platform.report.service.ReportService;
-import qraps.platform.review.dto.ResponseExpertSystem;
-import qraps.platform.review.dto.ReviewDto;
+import qraps.platform.review.dto.RequestExpertSystemDto;
+import qraps.platform.review.dto.ResponseReviewDto;
+import qraps.platform.web.controller.dto.ReviewPageDto;
 
 @Service
 public class ExpertSystemReviewService {
@@ -24,8 +25,8 @@ public class ExpertSystemReviewService {
         this.reportService = reportService;
     }
 
-    public ResponseExpertSystem.Result reviewFromExpertSystem(String target, MultipartFile uploadedFile) {
-        ResponseExpertSystem.Result response = reviewFromExpertSystem(uploadedFile);
+    public ResponseReviewDto reviewFromExpertSystem(ReviewPageDto reviewDto, MultipartFile uploadedFile) {
+        ResponseReviewDto response = reviewFromExpertSystem(uploadedFile);
         return response;
     }
 
@@ -46,8 +47,8 @@ public class ExpertSystemReviewService {
     /**
      * Todo: replace after demo
      */
-    private ResponseExpertSystem.Result getReviewResultFromExpertSystem(String target, MultipartFile uploadedFile) {
-        ReviewDto.RequestExpertSystem requestBody = ReviewDto.RequestExpertSystem.builder()
+    private ResponseReviewDto getReviewResultFromExpertSystem(String target, MultipartFile uploadedFile) {
+        RequestExpertSystemDto requestBody = RequestExpertSystemDto.builder()
                 .target(target)
                 .file(uploadedFile)
                 .build();
@@ -59,15 +60,17 @@ public class ExpertSystemReviewService {
                 .uri(url)
                 .bodyValue(requestBody)
                 .retrieve()
-                .bodyToMono(ResponseExpertSystem.Result.class)
+                .bodyToMono(ResponseReviewDto.class)
                 .block();
     }
 
-    private ResponseExpertSystem.Result reviewFromExpertSystem(MultipartFile uploadedFile) {
+    /**
+     * Expert System에 Excel 파일 전달
+     */
+    private ResponseReviewDto reviewFromExpertSystem(MultipartFile uploadedFile) {
         String url = "http://expert:5001/expert/review";
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("file", uploadedFile.getResource());
-        System.out.println("Build martipartfile");
 
         WebClient apiClient = WebClient.builder().baseUrl(url).build();
         return apiClient
@@ -76,7 +79,7 @@ public class ExpertSystemReviewService {
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(builder.build()))
                 .retrieve()
-                .bodyToMono(ResponseExpertSystem.Result.class)
+                .bodyToMono(ResponseReviewDto.class)
                 .block();
     }
 
