@@ -96,7 +96,7 @@ public class ValidationService {
 
         boolean isValid = Objects.equals(referenceValue.get(targetName), designValue);
         return ValidateResultDto.builder()
-                .partName(excelRow.getPartNo())
+                .partName(excelRow.getVerificationTarget())
                 .isValid(isValid)
                 .build();
     }
