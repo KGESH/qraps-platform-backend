@@ -6,106 +6,124 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소자 적합성 검증</title>
-    <link rel="stylesheet" th:href="@{/web/output.css}">
+    <link rel="stylesheet" th:href="@{web/output.css}">
 </head>
 
 <body>
 <!--nav-->
-<nav class="lg:h-[100px] h-[80px] flex items-center">
+<nav style="display: flex;"
+     class="lg:h-[100px] h-[80px] items-center">
 
-    <div class="lg:px-[100px] px-[50px] my-auto w-full flex justify-between ">
-        <a th:href="@{/main}">
-            <img th:src="@{/web/images/logo.svg}" alt="로고이미지">
+    <div style="display: flex;"
+         class="lg:px-[100px] px-[50px] my-auto w-full justify-between ">
+        <a th:href="@{main}">
+            <img th:src="@{web/images/logo.svg}" alt="로고이미지">
         </a>
-        <section class="flex gap-[60px]">
-            <a class="block leading-10 h-[40px]" th:href="@{/business}">사업분야</a>
-            <a class="block leading-10 h-[40px]" th:href="@{/validation_center}">검증센터</a>
+        <section style="display: flex;"
+                 class="gap-[60px]">
+            <a class="block leading-10 h-[40px]" th:href="@{business}">사업분야</a>
+            <a class="block leading-10 h-[40px]" th:href="@{validation_center}">검증센터</a>
         </section>
     </div>
 </nav>
 
 <main class="w-full h-fit relative">
-    <section class="lg:h-[80px] h-[70px] lg:px-[100px] px-[50px] flex"
-             style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);">
+    <section
+            class="lg:h-[80px] h-[70px] lg:px-[100px] px-[50px]"
+            style="display: flex;background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);">
         <h1 class="text-white text-xl my-auto">소자 적합성 검증</h1>
     </section>
 
-    <article class="lg:px-[100px] px-[50px] py-[56px] flex flex-col justify-center items-center gap-7">
+    <article style="display: flex; flex-direction: column;"
+             class="lg:px-[100px] px-[50px] py-[56px] justify-center items-center gap-7">
         <h2 class="font-semibold text-xl">소자 종류</h2>
         <div class="w-full grid gap-5 grid-cols-6 grid-rows-grid-row-1 leading-8 text-white">
-            <div class="col-span-2 flex items-center justify-center text-blue-900"
-                 style="background: linear-gradient(360deg, #E6EBEE 0.96%, #BED4E3 100%);">Discrete
+            <div
+                    class="col-span-2 items-center justify-center text-blue-900"
+                    style="display: flex;background: linear-gradient(360deg, #E6EBEE 0.96%, #BED4E3 100%);">Discrete
             </div>
-            <div class="flex items-center justify-center"
-                 style="background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
+            <div class="items-center justify-center"
+                 style="display: flex; background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
                 Diode
             </div>
-            <div class="flex items-center justify-center"
-                 style="background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
+            <div class="items-center justify-center"
+                 style="display: flex; background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
                 Transistor
             </div>
             <div class="col-span-2"></div>
-            <div class="col-span-2 row-span-2 flex items-center justify-center text-blue-900"
-                 style="background: linear-gradient(360deg, #E6EBEE 0.96%, #BED4E3 100%);">IC(Integrated Circuit)
+            <div class="col-span-2 row-span-2  items-center justify-center text-blue-900"
+                 style="display: flex; background: linear-gradient(360deg, #E6EBEE 0.96%, #BED4E3 100%);">IC(Integrated
+                Circuit)
             </div>
-            <div class="flex items-center justify-center"
-                 style="background: linear-gradient(180deg, #0B3C86 0%, #075CC0 100%);">System IC
+            <div class="items-center justify-center"
+                 style="display: flex; background: linear-gradient(180deg, #0B3C86 0%, #075CC0 100%);">System IC
             </div>
-            <div class="flex items-center justify-center"
-                 style="background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
+            <div class="items-center justify-center"
+                 style="display: flex; background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
                 Analog
             </div>
-            <div class="flex items-center justify-center"
-                 style="background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
+            <div class="items-center justify-center"
+                 style="display: flex; background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
                 Logic
             </div>
-            <div class="flex items-center justify-center"
-                 style="background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
+            <div class="items-center justify-center"
+                 style="display: flex; background: linear-gradient(180deg, rgba(24, 123, 215, 0.8) 0%, rgba(24, 123, 215, 0) 100%), #00A0E9;">
                 Micro
             </div>
-            <div class="flex items-center justify-center"
-                 style="background: linear-gradient(180deg, #0B3C86 0%, #075CC0 100%);">Memory
-            </div>
-        </div>
-    </article>
-
-    <article style='background: linear-gradient(180deg, #0061A8 0%, #007CD7 100%);'
-             class="lg:px-[100px] px-[50px] pt-[54px] pb-[70px] flex flex-col justify-center items-center gap-10">
-        <h2 class="font-semibold text-xl text-white">Why? 소자 검증 필요성</h2>
-        <div class="grid lg:grid-cols-4 grid-cols-2 max-lg:gap-y-[20px] justify-items-center lg:w-full w-[438px]">
-            <div class="rounded-full bg-white w-[176px] h-[176px] flex flex-col gap-3 justify-center items-center">
-                <img th:src="@{/web/images/confirm_ico.svg}" alt="">
-                <p>설계 목표 확인</p>
-            </div>
-            <div class="rounded-full bg-white w-[176px] h-[176px] flex flex-col gap-3 justify-center items-center">
-                <img th:src="@{/web/images/person_ico.svg}" alt="">
-                <p>고객 요구 항목</p>
-            </div>
-            <div class="rounded-full bg-white w-[176px] h-[176px] flex flex-col gap-3 justify-center items-center">
-                <img th:src="@{/web/images/cpu_ico.svg}" alt="">
-                <p>사용 환경 대응</p>
-            </div>
-            <div class="rounded-full bg-white w-[176px] h-[176px] flex flex-col gap-3 justify-center items-center">
-                <img th:src="@{/web/images/good_ico.svg}" alt="">
-                <p>품질 신뢰성 확보</p>
+            <div class="items-center justify-center"
+                 style="display: flex; background: linear-gradient(180deg, #0B3C86 0%, #075CC0 100%);">Memory
             </div>
         </div>
     </article>
 
     <article
-            style="background: linear-gradient(180deg, #E6EBEE 0%, rgba(230, 235, 238, 0.4) 33.67%, rgba(230, 235, 238, 0.4) 100%), url('./images/section_needs.png');"
-            class="w-full lg:px-[100px] px-[50px] py-[56px] h-[406px] flex flex-col justify-center items-center gap-[30px]">
+            style='background: linear-gradient(180deg, #0061A8 0%, #007CD7 100%); display: flex; flex-direction: column;'
+            class="lg:px-[100px] px-[50px] pt-[54px] pb-[70px] justify-center items-center gap-10">
+        <h2 class="font-semibold text-xl text-white">Why? 소자 검증 필요성</h2>
+        <div class="grid lg:grid-cols-4 grid-cols-2 max-lg:gap-y-[20px] justify-items-center lg:w-full w-[438px]">
+            <div style="display: flex; flex-direction: column;"
+                 class="rounded-full bg-white w-[176px] h-[176px] gap-3 justify-center items-center">
+                <img th:src="@{web/images/confirm_ico.svg}" alt="">
+                <p>설계 목표 확인</p>
+            </div>
+            <div style="display: flex; flex-direction: column;"
+                 class="rounded-full bg-white w-[176px] h-[176px] gap-3 justify-center items-center">
+                <img th:src="@{web/images/person_ico.svg}" alt="">
+                <p>고객 요구 항목</p>
+            </div>
+            <div style="display: flex; flex-direction: column;"
+                 class="rounded-full bg-white w-[176px] h-[176px] gap-3 justify-center items-center">
+                <img th:src="@{web/images/cpu_ico.svg}" alt="">
+                <p>사용 환경 대응</p>
+            </div>
+            <div style="display: flex; flex-direction: column;"
+                 class="rounded-full bg-white w-[176px] h-[176px] gap-3 justify-center items-center">
+                <img th:src="@{web/images/good_ico.svg}" alt="">
+                <p>품질 신뢰성 확보</p>
+            </div>
+        </div>
+    </article>
+    <!--    , url('./images/section_needs.png')-->
+    <!--            th:style="'background: linear-gradient(180deg, #E6EBEE 0%, rgba(230, 235, 238, 0.4) 33.67%, rgba(230, 235, 238, 0.4) 100%);'"-->
+
+    <!--    style="background: linear-gradient(180deg, #E6EBEE 0%, rgba(230, 235, 238, 0.4) 33.67%, rgba(230, 235, 238, 0.4) 100%), url('/web/images/section_needs.png');"-->
+
+    <!--            style="background: linear-gradient(180deg, #E6EBEE 0%, rgba(230, 235, 238, 0.4) 33.67%, rgba(230, 235, 238, 0.4) 100%), url('/web/images/section_needs.png');"-->
+    <article style="display: flex; flex-direction: column;"
+             class="w-full lg:px-[100px] px-[50px] py-[56px] h-[406px] justify-center items-center gap-[30px]">
         <h2 class="font-semibold text-xl">Why? 소자 검증 필요성</h2>
-        <div
-                class="flex px-[50px] py-[25px] justify-between bg-section-2 bg-cover lg:w-[541px] w-full lg:h-[225px] max-h-[200px] text-white text-sm">
-            <div class="flex flex-col justify-between">
+        <div style="display: flex;"
+             class="px-[50px] py-[25px] justify-between bg-section-2 bg-cover lg:w-[541px] w-full lg:h-[225px] max-h-[200px] text-white text-sm">
+            <div style="display: flex; flex-direction: column;"
+                 class=" justify-between">
                 <p>설계 목표 확인</p>
                 <p>소자 전기적 특성</p>
                 <p>소자 물리 화학적 특성</p>
                 <p>사용 환경 범위</p>
                 <p>노이즈 내성</p>
             </div>
-            <div class="flex flex-col justify-between">
+            <div style="display: flex; flex-direction: column;"
+                 class="justify-between">
                 <p>전기적 입력 출력 Spec.</p>
                 <p>열 저항</p>
                 <p>사용 온도 범위</p>
@@ -120,9 +138,11 @@
 <footer
         style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;"
         class="h-fit text-white">
-    <section class="flex justify-around py-10 px-10">
+    <section style="display: flex;"
+             class="justify-around py-10 px-10">
         <h3 class="text-2xl">CONTACT US</h3>
-        <article class="flex flex-col">
+        <article style="display: flex; flex-direction: column;"
+                 class="">
             <a href="tel:+032-326-0213">032-326-0213</a>
             <a href="mailto:yblee@qraps.co.kr">chkim@qraps.co.kr</a>
             <address>
