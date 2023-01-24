@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import qraps.platform.review.dto.ResponseExpertSystem;
+import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.web.controller.dto.ReviewPageDto;
 import qraps.platform.web.controller.dto.ValidateTarget;
 
@@ -34,7 +34,7 @@ public class WebController {
     }
 
     @GetMapping("validation_result")
-    public String validationResultPage(@SessionAttribute(name = "reviewResult", required = false) ResponseExpertSystem.Result reviewResult,
+    public String validationResultPage(@SessionAttribute(name = "reviewResult", required = false) ResponseReviewDto reviewResult,
                                        Model model) {
 
         if (reviewResult == null) {
