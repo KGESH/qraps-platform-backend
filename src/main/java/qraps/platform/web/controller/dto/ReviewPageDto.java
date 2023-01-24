@@ -1,11 +1,14 @@
 package qraps.platform.web.controller.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class ReviewPageDto {
     private ValidateTarget validTarget;
-    private String targetNumber;
+    private String partNo;
 }
