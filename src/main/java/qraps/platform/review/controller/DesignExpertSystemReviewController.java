@@ -46,10 +46,10 @@ public class DesignExpertSystemReviewController {
     }
 
     @Operation(summary = "데이터베이스 설계값 검증 시작 API",
-            description = "전문가 시스템에서 최초 1회 호출하는 API" +
-                    "처음 데이터베이스에서 검증 대상 조회" +
-                    "세션에 조회 결과 저장" +
-                    "review/part API 1회 요청마다 세션에 저장된 엔티티를 사용합니다.")
+            description = "전문가 시스템에서 최초 1회 호출하는 API\n" +
+                    "처음 데이터베이스에서 검증 대상 조회\n" +
+                    "세션에 조회 결과 저장\n" +
+                    "review/part API 1회 요청마다 세션에 저장된 엔티티를 사용합니다\n.")
     @ResponseBody
     @PostMapping("review/start")
     public Map<String, Object> startReviewTransaction(@RequestBody ReviewPageDto reviewDto, HttpServletRequest request) {
@@ -67,9 +67,9 @@ public class DesignExpertSystemReviewController {
     }
 
     @Operation(summary = "데이터베이스 설계값 검증 API",
-            description = "전문가 시스템이 엑셀 파싱이후, 파츠 1개(엑셀 1행) 값을 데이터베이스와 비교하는 API입니다. " +
-                    "검증할 소자의 개수 만큼 API를 호출하면 됩니다. " +
-                    "검증할 소자의 partNo, 검증 대상의 이름, 검증 대상의 설계값이 필수 항목입니다.")
+            description = "전문가 시스템이 엑셀 파싱이후, 파츠 1개(엑셀 1행) 값을 데이터베이스와 비교하는 API입니다.\n" +
+                    "검증할 소자의 개수 만큼 API를 호출하면 됩니다.\n" +
+                    "검증할 소자의 partNo, 검증 대상의 이름, 검증 대상의 설계값이 필수 항목입니다.\n")
     @ResponseBody
     @PostMapping("review/part")
     public ValidateResultDto validatePart(@RequestBody ExcelMapper excelRow, HttpServletRequest request) {
