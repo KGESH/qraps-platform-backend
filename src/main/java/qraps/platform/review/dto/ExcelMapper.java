@@ -25,7 +25,7 @@ public class ExcelMapper {
     private String unit;
 
     // 설계 값
-    private double designValue;
+    private Number designValue;
 
 
 }

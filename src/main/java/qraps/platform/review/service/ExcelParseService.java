@@ -50,7 +50,7 @@ public class ExcelParseService {
             String partName = row.getCell(ExcelColumn.PART_NAME.getIndex()).getStringCellValue();
             int note = (int) row.getCell(ExcelColumn.NOTE.getIndex()).getNumericCellValue();
             Optional<String> unit = Optional.ofNullable(row.getCell(ExcelColumn.UNIT.getIndex())).map(Cell::getStringCellValue);
-            Double designValue = Optional.ofNullable(row.getCell(ExcelColumn.DESIGN_VALUE.getIndex()))
+            Number designValue = Optional.ofNullable(row.getCell(ExcelColumn.DESIGN_VALUE.getIndex()))
                     .map(Cell::getNumericCellValue)
                     .orElseThrow(() -> new RuntimeException("설계값이 비어있습니다."));
             String needValidate = row.getCell(ExcelColumn.NEED_VALIDATE.getIndex()).getStringCellValue();

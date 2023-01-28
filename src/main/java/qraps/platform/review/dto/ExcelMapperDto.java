@@ -24,7 +24,7 @@ public class ExcelMapperDto {
     private Optional<String> unit;
 
     // 설계 값
-    private Double designValue;
+    private Number designValue;
 
     // 검증 대상
     private String needValidate;
