@@ -20,7 +20,7 @@ CREATE TABLE diode
     capacitance_typ                     DECIMAL(6, 2),
     capacitance_max                     DECIMAL(6, 2),
     reverse_recovery_time               DECIMAL(10, 3),
-    reliability_msl                     INT(1) CHECK (reliability_msl >= 1 AND reliability_msl <= 5),
+    reliability_msl                     INT(1) CHECK (reliability_msl >= 0 AND reliability_msl <= 5),
     reliability_rohs                    INT(1) CHECK (reliability_rohs = 1 OR reliability_rohs = 0),
     reliability_pbf                     INT(1) CHECK (reliability_pbf = 1 OR reliability_pbf = 0),
     reliability_halogen_free            INT(1) CHECK (reliability_halogen_free = 1 OR reliability_halogen_free = 0),
@@ -43,7 +43,7 @@ VALUES ('diode', 3, 0,
         1, 2, 3,
         0,
 --      reliability_msl CHECK Constraint 1 < 5
-        NULL, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
         0,
         0, 0, 0, 0,
         NULL, NULL, NULL);

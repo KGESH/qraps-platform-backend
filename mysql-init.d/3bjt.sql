@@ -26,7 +26,7 @@ CREATE TABLE bjt
     delay_time_max                           DECIMAL(7, 1),
     rise_time_max                            DECIMAL(7, 1),
     fall_time_max                            DECIMAL(7, 1),
-    reliability_msl                          INT(1) CHECK (reliability_msl >= 1 AND reliability_msl <= 5),
+    reliability_msl                          INT(1) CHECK (reliability_msl >= 0 AND reliability_msl <= 5),
     reliability_rohs                         INT(1) CHECK (reliability_rohs = 1 OR reliability_rohs = 0),
     reliability_pbf                          INT(1) CHECK (reliability_pbf = 1 OR reliability_pbf = 0),
     reliability_halogen_free                 INT(1) CHECK (reliability_halogen_free = 1 OR reliability_halogen_free = 0),
@@ -54,8 +54,7 @@ VALUES ('bjt', 3, 0,
         1,
         1, 3,
         3, 3, 3,
---       reliability_msl CHECK Constraint 1 < 5
-        NULL, 0, 0, 0, 0,
+        0, 0, 0, 0, 0,
         0,
         0, 0, 0, 0, 0, 0, 0, 0,
         NULL, NULL, NULL);
