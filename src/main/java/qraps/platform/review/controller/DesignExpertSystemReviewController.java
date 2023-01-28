@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import qraps.platform.review.dto.ExcelMapper;
 import qraps.platform.review.dto.ResponseReviewDto;
+import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.review.dto.ValidateResultDto;
 import qraps.platform.review.service.ExpertSystemReviewService;
 import qraps.platform.review.service.ValidationService;
-import qraps.platform.utils.EntityHelper;
 import qraps.platform.web.controller.dto.ReviewPageDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 import java.util.Optional;
 
 @Tag(name = "ExpertSystemReview", description = "전문가 시스템을 통한 검증 API")
@@ -45,6 +44,9 @@ public class DesignExpertSystemReviewController {
         return "redirect:/validation_result";
     }
 
+    /**
+     * Todo: Request 사용자 ID 필요
+     */
     @Operation(summary = "데이터베이스 설계값 검증 시작 API",
             description = "전문가 시스템에서 최초 1회 호출하는 API\n" +
                     "처음 데이터베이스에서 검증 대상 조회\n" +
@@ -52,19 +54,18 @@ public class DesignExpertSystemReviewController {
                     "review/part API 1회 요청마다 세션에 저장된 엔티티를 사용합니다\n.")
     @ResponseBody
     @PostMapping("review/start")
-    public Map<String, Object> startReviewTransaction(@RequestBody ReviewPageDto reviewDto, HttpServletRequest request) {
+    public boolean startReviewTransaction(@RequestBody ReviewPageDto reviewDto, HttpServletRequest request) {
 
-        Object targetEntity = validationService.findEntity(reviewDto);
-        // Entity 변수 이름을 key로 사용하는 조회용 Map
-        Map<String, Object> referenceValue = EntityHelper.convertEntityToMap(targetEntity);
+        ReviewDto.Verification verificationDto = validationService.getVerificationDto(reviewDto);
 
         HttpSession session = request.getSession();
-        session.setAttribute(reviewDto.getPartNo(), referenceValue);
+        session.setAttribute(reviewDto.getPartNo(), verificationDto);
         session.setAttribute("reviewDto", reviewDto);
 
         // Todo: replace
-        return referenceValue;
+        return true;
     }
+
 
     @Operation(summary = "데이터베이스 설계값 검증 API",
             description = "전문가 시스템이 엑셀 파싱이후, 파츠 1개(엑셀 1행) 값을 데이터베이스와 비교하는 API입니다.\n" +
@@ -73,12 +74,12 @@ public class DesignExpertSystemReviewController {
     @ResponseBody
     @PostMapping("review/part")
     public ValidateResultDto validatePart(@RequestBody ExcelMapper excelRow, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Map<String, Object> referenceValue =
-                Optional.ofNullable((Map<String, Object>) session.getAttribute(excelRow.getPartNo()))
-                        .orElseThrow(() -> new RuntimeException("검증 대상이 세션에 존재하지 않습니다."));
 
-        return validationService.validate(excelRow, referenceValue);
+        HttpSession session = request.getSession();
+        ReviewDto.Verification verificationDto = Optional.ofNullable((ReviewDto.Verification) session.getAttribute(excelRow.getPartNo()))
+                .orElseThrow(() -> new RuntimeException("검증 대상이 세션에 존재하지 않습니다."));
+
+        return validationService.validate(excelRow, verificationDto);
     }
 
 }
