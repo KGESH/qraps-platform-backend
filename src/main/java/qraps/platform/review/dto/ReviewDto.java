@@ -2,22 +2,12 @@ package qraps.platform.review.dto;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.*;
+
+import java.util.Map;
 
 
 public class ReviewDto {
-
-    @Getter
-    @Builder
-    public static class RequestExpertSystem {
-        private String target;
-        private MultipartFile file;
-    }
-
 
     @Getter
     @Setter
@@ -64,6 +54,16 @@ public class ReviewDto {
 
     }
 
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @ToString
+    public static class Verification {
+        private Map<String, Object> criteria;
+        private Map<String, Object> target;
+    }
+
 
     /**
      * Jasper studio 템플릿과 맵핑
@@ -72,6 +72,8 @@ public class ReviewDto {
      */
     @Getter
     @Setter
+    @Builder
+    @AllArgsConstructor
     @ToString
     public static class Result {
         private String partName;
