@@ -20,18 +20,18 @@ public class Diode {
     private String manufacturer_name;
 
     @Column(name = "oprating_temperature_min")
-    private Double oprating_temperature_min;
+    private Integer oprating_temperature_min;
     @Column(name = "oprating_temperature_max")
-    private Double oprating_temperature_max;
+    private Integer oprating_temperature_max;
     @Column(name = "storage_temperature_min")
-    private Double storage_temperature_min;
+    private Integer storage_temperature_min;
     @Column(name = "storage_temperature_max")
-    private Double storage_temperature_max;
+    private Integer storage_temperature_max;
 
     @Column(name = "juction_temperature_min")
-    private Double juction_temperature_min;
+    private Integer juction_temperature_min;
     @Column(name = "juction_temperature_max")
-    private Double juction_temperature_max;
+    private Integer juction_temperature_max;
 
     @Column(name = "forward_current_max")
     private Double forward_current_max;
@@ -52,26 +52,26 @@ public class Diode {
     @Column(name = "reverse_recovery_time")
     private Double reverse_recovery_time;
     @Column(name = "reliability_msl")
-    private Double reliability_msl;
+    private Integer reliability_msl;
     @Column(name = "reliability_rohs")
-    private Double reliability_rohs;
+    private Integer reliability_rohs;
     @Column(name = "reliability_pbf")
-    private Double reliability_pbf;
+    private Integer reliability_pbf;
     @Column(name = "reliability_halogen_free")
-    private Double reliability_halogen_free;
+    private Integer reliability_halogen_free;
     @Column(name = "reliability_aec_q101")
-    private Double reliability_aec_q101;
+    private Integer reliability_aec_q101;
     @Column(name = "package_type")
     private String package_type;
 
     @Column(name = "package_pin_num")
-    private Double package_pin_num;
+    private Integer package_pin_num;
     @Column(name = "diode_quantity")
-    private Double diode_quantity;
+    private Integer diode_quantity;
     @Column(name = "cathod_pin")
-    private Double cathod_pin;
+    private Integer cathod_pin;
     @Column(name = "anode_pin")
-    private Double anode_pin;
+    private Integer anode_pin;
     @Column(name = "picture1")
     private String picture1;
     @Column(name = "picture2")

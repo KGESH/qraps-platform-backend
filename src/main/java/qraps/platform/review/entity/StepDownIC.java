@@ -20,17 +20,17 @@ public class StepDownIC {
     private String manufacturer_name;
 
     @Column(name = "oprating_temperature_min")
-    private Double oprating_temperature_min;
+    private Integer oprating_temperature_min;
     @Column(name = "oprating_temperature_max")
-    private Double oprating_temperature_max;
+    private Integer oprating_temperature_max;
     @Column(name = "storage_temperature_min")
-    private Double storage_temperature_min;
+    private Integer storage_temperature_min;
     @Column(name = "storage_temperature_max")
-    private Double storage_temperature_max;
+    private Integer storage_temperature_max;
     @Column(name = "juction_temperature_min")
-    private Double juction_temperature_min;
+    private Integer juction_temperature_min;
     @Column(name = "juction_temperature_max")
-    private Double juction_temperature_max;
+    private Integer juction_temperature_max;
 
 
     @Column(name = "input_voltage_min")
@@ -94,48 +94,48 @@ public class StepDownIC {
 
 
     @Column(name = "thermal_shutdown_typ")
-    private Double thermal_shutdown_typ;
+    private Integer thermal_shutdown_typ;
     @Column(name = "thermal_recovery_typ")
-    private Double thermal_recovery_typ;
+    private Integer thermal_recovery_typ;
     @Column(name = "reliability_esd_hbm_plus")
-    private Double reliability_esd_hbm_plus;
+    private Integer reliability_esd_hbm_plus;
     @Column(name = "reliability_esd_hbm_minus")
-    private Double reliability_esd_hbm_minus;
+    private Integer reliability_esd_hbm_minus;
 
     @Column(name = "reliability_esd_cdm_plus")
-    private Double reliability_esd_cdm_plus;
+    private Integer reliability_esd_cdm_plus;
     @Column(name = "reliability_esd_cdm_minus")
-    private Double reliability_esd_cdm_minus;
+    private Integer reliability_esd_cdm_minus;
     @Column(name = "reliability_surge")
-    private Double reliability_surge;
+    private Integer reliability_surge;
 
     @Column(name = "reliability_eft")
-    private Double reliability_eft;
+    private Integer reliability_eft;
 
     @Column(name = "reliability_msl")
-    private Double reliability_msl;
+    private Integer reliability_msl;
     @Column(name = "reliability_rohs")
-    private Double reliability_rohs;
+    private Integer reliability_rohs;
     @Column(name = "reliability_pbf")
-    private Double reliability_pbf;
+    private Integer reliability_pbf;
     @Column(name = "reliability_halogen_free")
-    private Double reliability_halogen_free;
+    private Integer reliability_halogen_free;
     @Column(name = "reliability_aec")
-    private Double reliability_aec;
+    private Integer reliability_aec;
     @Column(name = "package_type")
     private String package_type;
 
     @Column(name = "package_pin_num")
-    private Double package_pin_num;
+    private Integer package_pin_num;
 
     @Column(name = "feedback")
-    private Double feedback;
+    private Integer feedback;
     @Column(name = "enable")
-    private Double enable;
+    private Integer enable;
     @Column(name = "pad")
-    private Double pad;
+    private Integer pad;
     @Column(name = "boot")
-    private Double boot;
+    private Integer boot;
 
     @Column(name = "picture1")
     private String picture1;
