@@ -9,7 +9,7 @@ import lombok.Setter;
 @Builder
 public class ValidateResultDto {
     // 항목
-    private String partName;
+    private String verificationTarget;
 
     // 검증 결과
     private boolean isValid;
