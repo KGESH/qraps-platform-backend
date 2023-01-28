@@ -3,19 +3,21 @@ package qraps.platform.review.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import qraps.platform.review.dto.Criteria;
 import qraps.platform.review.dto.ExcelMapper;
+import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.review.dto.ValidateResultDto;
 import qraps.platform.review.entity.PartList;
 import qraps.platform.review.repository.DiodeRepository;
 import qraps.platform.review.repository.PartListMapperRepository;
 import qraps.platform.review.repository.StepDownICRepository;
 import qraps.platform.review.repository.TransistorRepository;
+import qraps.platform.utils.EntityHelper;
 import qraps.platform.web.controller.dto.ReviewPageDto;
 import qraps.platform.web.controller.dto.ValidateTarget;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -39,6 +41,51 @@ public class ValidationService {
                 .stream()
                 .filter(item -> item.getDevice() == validateTarget.getTableIndex())
                 .collect(Collectors.toList());
+    }
+
+    public ReviewDto.Verification getVerificationDto(ReviewPageDto reviewDto) {
+        // Todo: 기준 row 조회
+        Object criteriaEntity = getCriteriaEntity(reviewDto.getValidTarget());
+        Object targetEntity = findEntity(reviewDto);
+
+        // Entity 변수 이름을 key로 사용하는 조회용 Map
+        Map<String, Object> criteriaValue = EntityHelper.convertEntityToMap(criteriaEntity);
+        Map<String, Object> referenceValue = EntityHelper.convertEntityToMap(targetEntity);
+
+        return ReviewDto.Verification.builder()
+                .criteria(criteriaValue)
+                .target(referenceValue)
+                .build();
+
+    }
+
+    public Object getCriteriaEntity(ValidateTarget validTarget) {
+        switch (validTarget) {
+            case IC:
+                ReviewPageDto sdicDto = ReviewPageDto.builder()
+                        .validTarget(validTarget)
+                        .partNo("sdic")
+                        .build();
+                return findEntity(sdicDto);
+
+            case TRANSISTOR:
+                ReviewPageDto transistorDto = ReviewPageDto.builder()
+                        .validTarget(validTarget)
+                        .partNo("bjt")
+                        .build();
+                return findEntity(transistorDto);
+
+            case DIODE:
+                ReviewPageDto diodeDto = ReviewPageDto.builder()
+                        .validTarget(validTarget)
+                        .partNo("diode")
+                        .build();
+                return findEntity(diodeDto);
+
+            default:
+                throw new RuntimeException("검증 기준 row 조회 error.");
+        }
+
     }
 
 
@@ -88,16 +135,90 @@ public class ValidationService {
     }
 
 
-    public ValidateResultDto validate(ExcelMapper excelRow, Map<String, Object> referenceValue) {
+    public ValidateResultDto validate(ExcelMapper excelRow, ReviewDto.Verification verificationDto) {
 
         // 검증 항목 row
         String targetName = excelRow.getVerificationTarget();
-        Double designValue = excelRow.getDesignValue();
+        Number designValue = excelRow.getDesignValue();
 
-        boolean isValid = Objects.equals(referenceValue.get(targetName), designValue);
+        boolean isValid = validateDesignValue(targetName, verificationDto, designValue);
+
         return ValidateResultDto.builder()
-                .partName(excelRow.getVerificationTarget())
+                .verificationTarget(excelRow.getVerificationTarget())
                 .isValid(isValid)
                 .build();
+
     }
+
+    /**
+     * Todo: check floating point Double -> BigDecimal
+     */
+    /**
+     * Criteria
+     * 0: N/A
+     * 1: Min
+     * 2: Equal
+     * 3: Max
+     * 4: Datasheet 기준 값의 -20% ~ +20% 사이에 설계 값이 포함(경계 포함)되면 pass
+     * 5: 별 의미 없음
+     */
+    public boolean validateDesignValue(String partName, ReviewDto.Verification verificationDto, Number designValue) {
+
+        Map<String, Object> referenceEntity = verificationDto.getTarget();
+        Map<String, Object> criteria = verificationDto.getCriteria();
+        Number referenceValue = ((Number) referenceEntity.get(partName));
+
+
+        int criteriaIndex = ((Number) criteria.get(partName)).intValue();
+        Criteria criteriaEnum = Criteria.values()[criteriaIndex];
+
+        switch (criteriaEnum) {
+            case NA:
+                throw new IllegalArgumentException("Unexpected criteria value: " + criteriaIndex);
+
+            case MIN:
+                return verifyMinValue(designValue, referenceValue);
+
+            case MAX:
+                return verifyMaxValue(designValue, referenceValue);
+
+            case EQUAL:
+                return verifyEqualValue(designValue, referenceValue);
+
+            case TOLERANCE:
+                return verifyToleranceValue(designValue, referenceValue);
+
+            case RESERVED:
+                throw new IllegalArgumentException("Unexpected criteria value: " + criteriaIndex);
+
+            default:
+                throw new IllegalArgumentException("Unexpected criteria value: " + criteriaIndex);
+
+        }
+
+    }
+
+    private boolean verifyMinValue(Number designValue, Number referenceValue) {
+        return designValue.doubleValue() <= referenceValue.doubleValue();
+    }
+
+    private boolean verifyMaxValue(Number designValue, Number referenceValue) {
+        return designValue.doubleValue() >= referenceValue.doubleValue();
+    }
+
+    private boolean verifyEqualValue(Number designValue, Number referenceValue) {
+        return designValue.doubleValue() == referenceValue.doubleValue();
+    }
+
+    /**
+     * 설계 값이 오차 범위 이내: true,
+     * 설계 값이 오차 범위 벗어남: false
+     */
+    private boolean verifyToleranceValue(Number designValue, Number referenceValue) {
+        double lowerBound = referenceValue.doubleValue() * (1 - Criteria.TOLERANCE.getToleranceMinRate());
+        double upperBound = referenceValue.doubleValue() * (1 + Criteria.TOLERANCE.getToleranceMaxRate());
+
+        return lowerBound <= designValue.doubleValue() && designValue.doubleValue() <= upperBound;
+    }
+
 }
