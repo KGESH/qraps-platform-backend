@@ -1,4 +1,4 @@
-package qraps.platform.utils;
+package qraps.platform.global.configs;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
