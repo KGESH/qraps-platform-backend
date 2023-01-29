@@ -3,6 +3,7 @@ package qraps.platform.review.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import qraps.platform.global.error.exception.EntityNotFoundException;
 import qraps.platform.review.dto.Criteria;
 import qraps.platform.review.dto.ExcelMapper;
 import qraps.platform.review.dto.ReviewDto;
@@ -18,6 +19,7 @@ import qraps.platform.web.controller.dto.ValidateTarget;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -37,10 +39,7 @@ public class ValidationService {
      * 소자 맵핑 테이블의 partNo 컬럼을 기준으로 정렬
      */
     public List<PartList> findAllPartListOrderByPartNo(ValidateTarget validateTarget) {
-        return partListMapperRepository.findAll(Sort.by(Sort.Direction.ASC, "partNo"))
-                .stream()
-                .filter(item -> item.getDevice() == validateTarget.getTableIndex())
-                .collect(Collectors.toList());
+        return partListMapperRepository.findAll(Sort.by(Sort.Direction.ASC, "partNo")).stream().filter(item -> item.getDevice() == validateTarget.getTableIndex()).collect(Collectors.toList());
     }
 
     public ReviewDto.Verification getVerificationDto(ReviewPageDto reviewDto) {
@@ -52,34 +51,22 @@ public class ValidationService {
         Map<String, Object> criteriaValue = EntityHelper.convertEntityToMap(criteriaEntity);
         Map<String, Object> referenceValue = EntityHelper.convertEntityToMap(targetEntity);
 
-        return ReviewDto.Verification.builder()
-                .criteria(criteriaValue)
-                .target(referenceValue)
-                .build();
+        return ReviewDto.Verification.builder().criteria(criteriaValue).target(referenceValue).build();
 
     }
 
     public Object getCriteriaEntity(ValidateTarget validTarget) {
         switch (validTarget) {
             case IC:
-                ReviewPageDto sdicDto = ReviewPageDto.builder()
-                        .validTarget(validTarget)
-                        .partNo("sdic")
-                        .build();
+                ReviewPageDto sdicDto = ReviewPageDto.builder().validTarget(validTarget).partNo("sdic").build();
                 return findEntity(sdicDto);
 
             case TRANSISTOR:
-                ReviewPageDto transistorDto = ReviewPageDto.builder()
-                        .validTarget(validTarget)
-                        .partNo("bjt")
-                        .build();
+                ReviewPageDto transistorDto = ReviewPageDto.builder().validTarget(validTarget).partNo("bjt").build();
                 return findEntity(transistorDto);
 
             case DIODE:
-                ReviewPageDto diodeDto = ReviewPageDto.builder()
-                        .validTarget(validTarget)
-                        .partNo("diode")
-                        .build();
+                ReviewPageDto diodeDto = ReviewPageDto.builder().validTarget(validTarget).partNo("diode").build();
                 return findEntity(diodeDto);
 
             default:
@@ -115,20 +102,11 @@ public class ValidationService {
         // Todo: refactor to enum
         switch (tableIndex) {
             case 1:
-                return ReviewPageDto.builder()
-                        .validTarget(ValidateTarget.IC)
-                        .partNo(partNo)
-                        .build();
+                return ReviewPageDto.builder().validTarget(ValidateTarget.IC).partNo(partNo).build();
             case 2:
-                return ReviewPageDto.builder()
-                        .validTarget(ValidateTarget.TRANSISTOR)
-                        .partNo(partNo)
-                        .build();
+                return ReviewPageDto.builder().validTarget(ValidateTarget.TRANSISTOR).partNo(partNo).build();
             case 3:
-                return ReviewPageDto.builder()
-                        .validTarget(ValidateTarget.DIODE)
-                        .partNo(partNo)
-                        .build();
+                return ReviewPageDto.builder().validTarget(ValidateTarget.DIODE).partNo(partNo).build();
             default:
                 throw new RuntimeException("PartNo의 데이터베이스 테이블 index가 잘못되었습니다.");
         }
@@ -143,10 +121,7 @@ public class ValidationService {
 
         boolean isValid = validateDesignValue(targetName, verificationDto, designValue);
 
-        return ValidateResultDto.builder()
-                .verificationTarget(excelRow.getVerificationTarget())
-                .isValid(isValid)
-                .build();
+        return ValidateResultDto.builder().verificationTarget(excelRow.getVerificationTarget()).isValid(isValid).build();
 
     }
 
@@ -166,7 +141,8 @@ public class ValidationService {
 
         Map<String, Object> referenceEntity = verificationDto.getTarget();
         Map<String, Object> criteria = verificationDto.getCriteria();
-        Number referenceValue = ((Number) referenceEntity.get(partName));
+        Number referenceValue = (Number) (Optional.ofNullable(referenceEntity.get(partName))
+                .orElseThrow(() -> new EntityNotFoundException("DB에 저장된 해당 필드가 NULL이거나 존재하지 않습니다.\n" + "필드: " + partName)));
 
 
         int criteriaIndex = ((Number) criteria.get(partName)).intValue();
