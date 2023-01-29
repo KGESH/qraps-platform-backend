@@ -46,10 +46,10 @@ class ExpertSystemReviewServiceTest {
 
         //when
         ReviewDto.Verification verificationDto = validationService.getVerificationDto(reviewPageDto);
-        ExcelMapper validateMinRequest = createExpertSystemMockRequest(mockPartNo, "oprating_temperature_min", 1);
-        ExcelMapper validateEqualRequest = createExpertSystemMockRequest(mockPartNo, "efficiency_typ", 100);
-        ExcelMapper validateMaxRequest = createExpertSystemMockRequest(mockPartNo, "oprating_temperature_max", 9999);
-        ExcelMapper validateToleranceRequest = createExpertSystemMockRequest(mockPartNo, "thermal_recovery_typ", 100);
+        ExcelMapper validateMinRequest = createExpertSystemMockRequest("oprating_temperature_min", 1);
+        ExcelMapper validateEqualRequest = createExpertSystemMockRequest("efficiency_typ", 100);
+        ExcelMapper validateMaxRequest = createExpertSystemMockRequest("oprating_temperature_max", 9999);
+        ExcelMapper validateToleranceRequest = createExpertSystemMockRequest("thermal_recovery_typ", 100);
 
         ValidateResultDto validateMinResult = validationService.validate(validateMinRequest, verificationDto);
         ValidateResultDto validateEqualResult = validationService.validate(validateEqualRequest, verificationDto);
@@ -72,8 +72,8 @@ class ExpertSystemReviewServiceTest {
 
     }
 
-    private ExcelMapper createExpertSystemMockRequest(String partNo, String verificationTarget, Number designValue) {
-        return ExcelMapper.builder().partNo(partNo).verificationTarget(verificationTarget).designValue(designValue).build();
+    private ExcelMapper createExpertSystemMockRequest(String verificationTarget, Number designValue) {
+        return ExcelMapper.builder().partNo(mockPartNo).verificationTarget(verificationTarget).designValue(designValue).build();
     }
 
     private StepDownIC createMockCriteria() {
