@@ -70,7 +70,7 @@ public class ValidationService {
                 return findEntity(diodeDto);
 
             default:
-                throw new RuntimeException("검증 기준 row 조회 error.");
+                throw new EntityNotFoundException("검증 Criteria row 조회 실패.");
         }
 
     }
@@ -82,21 +82,21 @@ public class ValidationService {
 
         switch (target) {
             case IC:
-                return stepDownICRepository.findById(partNo).orElseThrow(() -> new RuntimeException("IC 검증 대상의 partNo가 데이터베이스에 존재하지 않습니다."));
+                return stepDownICRepository.findById(partNo).orElseThrow(() -> new EntityNotFoundException("IC 검증 대상의 partNo가 데이터베이스에 존재하지 않습니다."));
 
             case TRANSISTOR:
-                return transistorRepository.findById(partNo).orElseThrow(() -> new RuntimeException("TRANSISTOR 검증 대상의 partNo가 데이터베이스에 존재하지 않습니다."));
+                return transistorRepository.findById(partNo).orElseThrow(() -> new EntityNotFoundException("TRANSISTOR 검증 대상의 partNo가 데이터베이스에 존재하지 않습니다."));
 
             case DIODE:
-                return diodeRepository.findById(partNo).orElseThrow(() -> new RuntimeException("DIODE 검증 대상의 partNo가 데이터베이스에 존재하지 않습니다."));
+                return diodeRepository.findById(partNo).orElseThrow(() -> new EntityNotFoundException("DIODE 검증 대상의 partNo가 데이터베이스에 존재하지 않습니다."));
 
             default:
-                throw new RuntimeException("Review Page DTO Error");
+                throw new EntityNotFoundException("Review Page DTO Error");
         }
     }
 
     public ReviewPageDto findTargetByPartNo(String partNo) {
-        PartList partList = partListMapperRepository.findByPartNo(partNo).orElseThrow(() -> new RuntimeException("partNo를 찾을 수 없습니다."));
+        PartList partList = partListMapperRepository.findByPartNo(partNo).orElseThrow(() -> new EntityNotFoundException("partNo를 찾을 수 없습니다."));
         int tableIndex = partList.getDevice();
 
         // Todo: refactor to enum
@@ -108,10 +108,9 @@ public class ValidationService {
             case 3:
                 return ReviewPageDto.builder().validTarget(ValidateTarget.DIODE).partNo(partNo).build();
             default:
-                throw new RuntimeException("PartNo의 데이터베이스 테이블 index가 잘못되었습니다.");
+                throw new EntityNotFoundException("PartNo의 데이터베이스 테이블 index가 잘못되었습니다.");
         }
     }
-
 
     public ValidateResultDto validate(ExcelMapper excelRow, ReviewDto.Verification verificationDto) {
 

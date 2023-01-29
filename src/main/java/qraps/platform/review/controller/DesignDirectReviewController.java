@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import qraps.platform.global.error.exception.BusinessException;
+import qraps.platform.global.error.exception.ErrorCode;
 import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.review.service.DirectReviewService;
 import qraps.platform.review.service.ValidationService;
@@ -44,7 +46,11 @@ public class DesignDirectReviewController {
 
 
     @PostMapping(path = "review/direct", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String review(@ModelAttribute("reviewDto") ReviewPageDto reviewDto, @RequestParam("file_input") MultipartFile uploadedFile, HttpServletRequest request) throws Exception {
+    public String review(@ModelAttribute("reviewDto") ReviewPageDto reviewDto, @RequestParam(value = "file_input") MultipartFile uploadedFile, HttpServletRequest request) throws Exception {
+        if (uploadedFile.isEmpty()) {
+            throw new BusinessException("검증 엑셀 파일이 누락되었습니다.", ErrorCode.INVALID_INPUT_VALUE);
+        }
+
         ResponseReviewDto reviewResult = designReviewService.directReview(reviewDto.getValidTarget(), uploadedFile);
 
         HttpSession session = request.getSession();
