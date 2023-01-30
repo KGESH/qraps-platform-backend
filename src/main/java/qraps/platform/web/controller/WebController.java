@@ -50,4 +50,8 @@ public class WebController {
         return "validation_result";
     }
 
+    @GetMapping("result/sdic")
+    public String stepDownICResultPage() {
+        return "validation_page_1";
+    }
 }
