@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import qraps.platform.global.error.exception.EntityNotFoundException;
 import qraps.platform.review.dto.ExcelMapper;
 import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.review.dto.ReviewDto;
@@ -77,7 +78,7 @@ public class DesignExpertSystemReviewController {
 
         HttpSession session = request.getSession();
         ReviewDto.Verification verificationDto = Optional.ofNullable((ReviewDto.Verification) session.getAttribute(excelRow.getPartNo()))
-                .orElseThrow(() -> new RuntimeException("검증 대상이 세션에 존재하지 않습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("검증 대상이 세션에 존재하지 않습니다."));
 
         return validationService.validate(excelRow, verificationDto);
     }
