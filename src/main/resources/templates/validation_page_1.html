@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SDIC 검증</title>
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"/>
+    <!--    <link rel="stylesheet" href="./output.css"/>-->
+    <link rel="stylesheet" th:href="@{/web/output.css}">
+
+</head>
+
+<body class="min-w-[678px] overflow-scroll">
+<!--nav-->
+<nav class="lg:h-[100px] h-[80px] flex items-center">
+    <div class="lg:px-[100px] px-[50px] my-auto w-full flex justify-between">
+        <a href="./main_page.html">
+            <img src="./images/logo.svg" alt="로고이미지"/>
+        </a>
+        <section class="flex gap-[60px]">
+            <a class="block leading-10 h-[40px]" href="./business_page.html">사업분야</a>
+            <a class="block leading-10 h-[40px]" href="./validation_center_page.html">검증센터</a>
+        </section>
+    </div>
+</nav>
+
+<main class="w-full h-fit relative">
+    <section class="lg:h-[80px] h-[70px] lg:px-[100px] px-[50px] flex" style="
+          background: linear-gradient(
+              180deg,
+              rgba(24, 123, 215, 0) 0%,
+              rgba(24, 123, 215, 0.8) 100%
+            ),
+            #00a0e9;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        ">
+        <h1 class="text-white text-xl my-auto">검증</h1>
+    </section>
+
+    <div id="pdf-section" class="flex flex-col gap-[10px] my-5 items-center">
+        <h2>Check Component</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 border-r">Part No</th>
+                    <th scope="col" class="px-6 py-3 border-r">Manufacturer</th>
+                    <th scope="col" class="px-6 py-3 border-r">Application</th>
+                    <th scope="col" class="px-6 py-3">Step</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        1
+                    </th>
+                    <td class="px-6 py-4 border-r">3</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>1. Features Check</h2>
+        <div class="bg-blue-400 w-[70%] h-[300px]">placeholder</div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row"
+                        class="px-6 py-4 w-[50%] border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Check Result
+                    </th>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>2. Min/Maximum Rating</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Check Item</th>
+                    <th scope="col" class="px-6 py-3 border-r">Unit</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">설계 값</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Datasheet</th>
+                    <th scope="col" class="px-6 py-3 border-r">적용여부</th>
+                    <th scope="col" class="px-6 py-3">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="3"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Temperature
+                    </th>
+                    <td class="px-6 py-4 border-r">Ambident</td>
+                    <td class="px-6 py-4 border-r">℃</td>
+                    <td class="px-6 py-4 border-r">4</td>
+                    <td class="px-6 py-4 border-r">5</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">Storage</td>
+                    <td class="px-6 py-4 border-r">℃</td>
+                    <td class="px-6 py-4 border-r">6</td>
+                    <td class="px-6 py-4 border-r">7</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">Junction</td>
+                    <td class="px-6 py-4 border-r">℃</td>
+                    <td class="px-6 py-4 border-r">8</td>
+                    <td class="px-6 py-4 border-r">9</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Input
+                    </th>
+                    <td class="px-6 py-4 border-r">전압</td>
+                    <td class="px-6 py-4 border-r">VDC</td>
+                    <td class="px-6 py-4 border-r">10</td>
+                    <td class="px-6 py-4 border-r">11</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">전류</td>
+                    <td class="px-6 py-4 border-r">A</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="3"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Output
+                    </th>
+                    <td class="px-6 py-4 border-r">전압</td>
+                    <td class="px-6 py-4 border-r">VDC</td>
+                    <td class="px-6 py-4 border-r">12</td>
+                    <td class="px-6 py-4 border-r">13</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">전류</td>
+                    <td class="px-6 py-4 border-r">A</td>
+                    <td class="px-6 py-4 border-r">16</td>
+                    <td class="px-6 py-4 border-r">17</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">정격전력</td>
+                    <td class="px-6 py-4 border-r">W</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>3. Mechanical and Package</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Check Item</th>
+                    <th scope="col" class="px-6 py-3 border-r">Unit</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">설계 값</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Datasheet</th>
+                    <th scope="col" class="px-6 py-3 border-r">적용여부</th>
+                    <th scope="col" class="px-6 py-3">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="5"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        패키지
+                    </th>
+                    <td class="px-6 py-4 border-r">Type *1</td>
+                    <td class="px-6 py-4 border-r">Model</td>
+                    <td colspan="2" class="px-6 py-4 border-r">2</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">MSL</td>
+                    <td class="px-6 py-4 border-r">Level</td>
+                    <td colspan="2" class="px-6 py-4 border-r">40</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">RoHS</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">41</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">Pb Free</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">42</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 "></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">Halogen Free</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">43</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>4. Electrical Characteristics</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Check Item</th>
+                    <th scope="col" class="px-6 py-3 border-r">Unit</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">설계 값</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Datasheet</th>
+                    <th scope="col" class="px-6 py-3 border-r">적용여부</th>
+                    <th scope="col" class="px-6 py-3">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" colspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Drop Voltage *2
+                    </th>
+                    <td class="px-6 py-4 border-r">V</td>
+                    <td class="px-6 py-4 border-r">18</td>
+                    <td class="px-6 py-4 border-r">19</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" colspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Quiescent Current *3
+                    </th>
+                    <td class="px-6 py-4 border-r">A</td>
+                    <td class="px-6 py-4 border-r">20</td>
+                    <td class="px-6 py-4 border-r">21</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" colspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Efficiency *4
+                    </th>
+                    <td class="px-6 py-4 border-r">uA</td>
+                    <td class="px-6 py-4 border-r">23</td>
+                    <td class="px-6 py-4 border-r">25</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" colspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Current limit
+                    </th>
+                    <td class="px-6 py-4 border-r">A</td>
+                    <td class="px-6 py-4 border-r">29</td>
+                    <td class="px-6 py-4 border-r">31</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r" colspan="2">Output Voltage Tolerance</td>
+                    <td class="px-6 py-4 border-r">%</td>
+                    <td class="px-6 py-4 border-r">15</td>
+                    <td class="px-6 py-4 border-r">14</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r" rowspan="2">Level</td>
+                    <td class="px-6 py-4 border-r">VIL</td>
+                    <td class="px-6 py-4 border-r">V</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">VIH</td>
+                    <td class="px-6 py-4 border-r">V</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="bg-blue-400 w-[70%] h-[300px]">placeholder</div>
+        <h2>5. Pin Function</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Check Item</th>
+                    <th scope="col" class="px-6 py-3 border-r">Unit</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">설계 값</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Datasheet</th>
+                    <th scope="col" class="px-6 py-3 border-r">적용여부</th>
+                    <th scope="col" class="px-6 py-3">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="3"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Protection
+                    </th>
+                    <td class="px-6 py-4 border-r">OVP</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">OTP</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">32</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">OCP</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="4"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Pin Protection
+                    </th>
+                    <td class="px-6 py-4 border-r">Enable</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">48</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">Feed Back</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">47</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">Adjustable</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">50</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">GND Pad</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">49</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>6. Reliability and Qualified</h2>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Check Item</th>
+                    <th scope="col" class="px-6 py-3 border-r">Unit</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">설계 값</th>
+                    <th scope="col" colspan="2" class="px-6 py-3 border-r">Datasheet</th>
+                    <th scope="col" class="px-6 py-3 border-r">적용여부</th>
+                    <th scope="col" class="px-6 py-3">Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        ESD
+                    </th>
+                    <td class="px-6 py-4 border-r">HBM</td>
+                    <td class="px-6 py-4 border-r">kV</td>
+                    <td colspan="2" class="px-6 py-4 border-r">34</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">ODM</td>
+                    <td class="px-6 py-4 border-r">kV</td>
+                    <td colspan="2" class="px-6 py-4 border-r">36</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" rowspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Reliability
+                    </th>
+                    <td class="px-6 py-4 border-r">Surge</td>
+                    <td class="px-6 py-4 border-r">kV</td>
+                    <td colspan="2" class="px-6 py-4 border-r">38</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 border-r">EFT</td>
+                    <td class="px-6 py-4 border-r">kV</td>
+                    <td colspan="2" class="px-6 py-4 border-r">39</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Qualified
+                    </th>
+                    <td class="px-6 py-4 border-r">AEC</td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td colspan="2" class="px-6 py-4 border-r">44</td>
+                    <td colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <button id="gen-pdf-button" type="button">GEN PDF</button>
+
+        <button type="submit"
+                class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            저장 후 검증
+            <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                      clip-rule="evenodd"></path>
+            </svg>
+        </button>
+        <!-- <button type="submit"
+          class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          보고서 출력
+          <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button> -->
+    </div>
+</main>
+
+<footer style="
+        background: linear-gradient(
+            180deg,
+            rgba(24, 123, 215, 0) 0%,
+            rgba(24, 123, 215, 0.8) 100%
+          ),
+          #00a0e9;
+      " class="h-fit text-white">
+    <section class="flex justify-around py-10 px-10">
+        <h3 class="text-2xl">CONTACT US</h3>
+        <article class="flex flex-col">
+            <a href="tel:+032-326-0213">032-326-0213</a>
+            <a href="mailto:yblee@qraps.co.kr">chkim@qraps.co.kr</a>
+            <address>인천광역시 부평구 여우재로26번길 28-13</address>
+        </article>
+    </section>
+    <hr/>
+    <section class="px-10 py-5 text-center">
+        ⓒ QRAPS 2022. All rights reserved.
+    </section>
+</footer>
+<script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+<!--<script src="node_modules/jspdf/dist/jspdf.umd.min.js">-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    console.log('load script');
+    window.html2canvas = html2canvas;
+    window.jsPDF = window.jspdf.jsPDF;
+    window.onload = function () {
+        const genPdfButton = document.getElementById("gen-pdf-button");
+        genPdfButton.addEventListener('click', generatePDF);
+    }
+
+    function generatePDF() {
+        const source = document.getElementById('pdf-section');
+
+        html2canvas(source).then(canvas => {
+            const imgData = canvas.toDataURL("image/png");
+            const imgWidth = 210; // 가로(mm) (A4)
+            const pageHeight = imgWidth * 1.414; // 세로 길이 (A4)
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            const pdf = new jsPDF({
+                orientation: "p",
+                unit: "mm",
+                format: "a4",
+            });
+
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            // 첫 페이지 출력
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            // 한 페이지 이상일 경우 루프 돌면서 출력
+            while (heightLeft >= 20) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save("demo.pdf");
+        })
+    }
+
+</script>
+</body>
+
+</html>
