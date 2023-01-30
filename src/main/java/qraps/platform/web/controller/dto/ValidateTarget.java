@@ -1,7 +1,6 @@
 package qraps.platform.web.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import qraps.platform.global.error.exception.BusinessException;
 import qraps.platform.global.error.exception.ErrorCode;
 
@@ -16,7 +15,6 @@ public enum ValidateTarget {
 
     private final String target;
     private final String description;
-
     private final int tableIndex;
 
     ValidateTarget(String target, String description, int tableIndex) {
@@ -42,17 +40,14 @@ public enum ValidateTarget {
         }
     }
 
-    @JsonValue
     public String getTarget() {
         return target;
     }
 
-    @JsonValue
     public String getDescription() {
         return description;
     }
 
-    @JsonValue
     public int getTableIndex() {
         return tableIndex;
     }
