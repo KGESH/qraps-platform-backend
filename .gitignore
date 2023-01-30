@@ -40,3 +40,7 @@ database
 
 ### 반도체 소자 이미지 ###
 target-images
+
+
+### Client Node Modules ###
+node_modules
