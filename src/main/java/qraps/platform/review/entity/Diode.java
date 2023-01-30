@@ -1,5 +1,7 @@
 package qraps.platform.review.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -7,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Getter
+@Builder
+@AllArgsConstructor
 @Entity(name = "diode")
 public class Diode {
     @Id
@@ -79,4 +83,6 @@ public class Diode {
     @Column(name = "picture3")
     private String picture3;
 
+    public Diode() {
+    }
 }

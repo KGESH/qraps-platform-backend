@@ -1,15 +1,17 @@
 package qraps.platform.review.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
-@Entity
 @Getter
-@Table(name = "sdic")
+@Builder
+@AllArgsConstructor
+@Entity(name = "sdic")
 public class StepDownIC {
     @Id
     @Column(name = "partNo")
