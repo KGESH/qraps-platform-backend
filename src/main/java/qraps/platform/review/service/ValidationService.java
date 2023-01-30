@@ -3,7 +3,9 @@ package qraps.platform.review.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import qraps.platform.global.error.exception.BusinessException;
 import qraps.platform.global.error.exception.EntityNotFoundException;
+import qraps.platform.global.error.exception.ErrorCode;
 import qraps.platform.review.dto.Criteria;
 import qraps.platform.review.dto.ExcelMapper;
 import qraps.platform.review.dto.ReviewDto;
@@ -149,7 +151,7 @@ public class ValidationService {
 
         switch (criteriaEnum) {
             case NA:
-                throw new IllegalArgumentException("Unexpected criteria value: " + criteriaIndex);
+                throw new BusinessException("Unexpected criteria value: " + criteriaIndex, ErrorCode.INVALID_INPUT_VALUE);
 
             case MIN:
                 return verifyMinValue(designValue, referenceValue);
@@ -164,10 +166,10 @@ public class ValidationService {
                 return verifyToleranceValue(designValue, referenceValue);
 
             case RESERVED:
-                throw new IllegalArgumentException("Unexpected criteria value: " + criteriaIndex);
+                throw new BusinessException("Unexpected criteria value: " + criteriaIndex, ErrorCode.INVALID_INPUT_VALUE);
 
             default:
-                throw new IllegalArgumentException("Unexpected criteria value: " + criteriaIndex);
+                throw new BusinessException("Unexpected criteria value: DEFAULT CASE", ErrorCode.INVALID_INPUT_VALUE);
 
         }
 
