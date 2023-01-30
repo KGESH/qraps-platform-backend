@@ -19,6 +19,7 @@ public class GlobalExceptionHandlingControllerAdvice {
      */
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
+        /** Todo: replace to log */
         e.printStackTrace();
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -32,6 +33,7 @@ public class GlobalExceptionHandlingControllerAdvice {
      */
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
+        /** Todo: replace to log */
         e.printStackTrace();
         final ErrorCode errorCode = e.getErrorCode();
         final ErrorResponse response = ErrorResponse.of(errorCode, e.getMessage());
@@ -57,7 +59,6 @@ public class GlobalExceptionHandlingControllerAdvice {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        /** Todo: replace to log */
         e.printStackTrace();
         final ErrorResponse response = ErrorResponse.of(e);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -68,7 +69,6 @@ public class GlobalExceptionHandlingControllerAdvice {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        /** Todo: replace to log */
         e.printStackTrace();
         final ErrorResponse response = ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED);
         return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
@@ -76,7 +76,6 @@ public class GlobalExceptionHandlingControllerAdvice {
 
     @ExceptionHandler(BindException.class)
     protected ResponseEntity<ErrorResponse> handleBindException(BindException e) {
-        /** Todo: replace to log */
         e.printStackTrace();
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, e.getBindingResult());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
