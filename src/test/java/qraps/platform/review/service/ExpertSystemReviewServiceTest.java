@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import qraps.platform.review.dto.Criteria;
-import qraps.platform.review.dto.ExcelMapper;
+import qraps.platform.review.dto.ExpertExcelMapperDto;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.review.dto.ValidateResultDto;
 import qraps.platform.review.entity.StepDownIC;
@@ -46,10 +46,10 @@ class ExpertSystemReviewServiceTest {
 
         //when
         ReviewDto.Verification verificationDto = validationService.getVerificationDto(reviewPageDto);
-        ExcelMapper validateMinRequest = createExpertSystemMockRequest("oprating_temperature_min", 1);
-        ExcelMapper validateEqualRequest = createExpertSystemMockRequest("efficiency_typ", 100);
-        ExcelMapper validateMaxRequest = createExpertSystemMockRequest("oprating_temperature_max", 9999);
-        ExcelMapper validateToleranceRequest = createExpertSystemMockRequest("thermal_recovery_typ", 100);
+        ExpertExcelMapperDto validateMinRequest = createExpertSystemMockRequest("oprating_temperature_min", 1);
+        ExpertExcelMapperDto validateEqualRequest = createExpertSystemMockRequest("efficiency_typ", 100);
+        ExpertExcelMapperDto validateMaxRequest = createExpertSystemMockRequest("oprating_temperature_max", 9999);
+        ExpertExcelMapperDto validateToleranceRequest = createExpertSystemMockRequest("thermal_recovery_typ", 100);
 
         ValidateResultDto validateMinResult = validationService.validate(validateMinRequest, verificationDto);
         ValidateResultDto validateEqualResult = validationService.validate(validateEqualRequest, verificationDto);
@@ -72,8 +72,8 @@ class ExpertSystemReviewServiceTest {
 
     }
 
-    private ExcelMapper createExpertSystemMockRequest(String verificationTarget, Number designValue) {
-        return ExcelMapper.builder().partNo(mockPartNo).verificationTarget(verificationTarget).designValue(designValue).build();
+    private ExpertExcelMapperDto createExpertSystemMockRequest(String verificationTarget, Number designValue) {
+        return ExpertExcelMapperDto.builder().partNo(mockPartNo).verificationTarget(verificationTarget).designValue(designValue).build();
     }
 
     private StepDownIC createMockCriteria() {

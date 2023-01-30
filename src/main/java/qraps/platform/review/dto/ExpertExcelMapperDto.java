@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ExcelMapper {
+public class ExpertExcelMapperDto {
     // 소자 ID
     @Schema(example = "LM2576HVSX-ADJ/NOPB", required = true)
     private String partNo;

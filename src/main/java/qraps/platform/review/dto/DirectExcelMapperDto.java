@@ -7,13 +7,10 @@ import lombok.Setter;
 import java.util.Objects;
 import java.util.Optional;
 
-/**
- * Todo: mapping excel column
- */
 @Getter
 @Setter
 @Builder
-public class ExcelMapperDto {
+public class DirectExcelMapperDto {
     // 항목
     private String partName;
 

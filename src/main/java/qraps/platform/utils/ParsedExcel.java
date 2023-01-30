@@ -3,7 +3,7 @@ package qraps.platform.utils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import qraps.platform.review.dto.ExcelMapperDto;
+import qraps.platform.review.dto.DirectExcelMapperDto;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ParsedExcel {
     private String partNo;
-    private List<ExcelMapperDto> parsedRows;
+    private List<DirectExcelMapperDto> parsedRows;
 }

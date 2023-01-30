@@ -8,8 +8,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import qraps.platform.global.error.exception.BusinessException;
 import qraps.platform.global.error.exception.ErrorCode;
+import qraps.platform.review.dto.DirectExcelMapperDto;
 import qraps.platform.review.dto.ExcelColumn;
-import qraps.platform.review.dto.ExcelMapperDto;
 import qraps.platform.utils.ParsedExcel;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class ExcelParseService {
 
     public ParsedExcel parseExcel(InputStream excelStream) throws IOException {
-        ArrayList<ExcelMapperDto> parsedRows = new ArrayList<>();
+        ArrayList<DirectExcelMapperDto> parsedRows = new ArrayList<>();
         Workbook workbook = new XSSFWorkbook(excelStream);
 
         // 엑셀 파일의 첫번째 시트
@@ -63,7 +63,7 @@ public class ExcelParseService {
 
 
             parsedRows.add(
-                    ExcelMapperDto.builder()
+                    DirectExcelMapperDto.builder()
                             .partName(partName)
                             .note(note)
                             .unit(unit)

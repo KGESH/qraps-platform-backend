@@ -3,7 +3,7 @@ package qraps.platform.review.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import qraps.platform.review.dto.ExcelMapperDto;
+import qraps.platform.review.dto.DirectExcelMapperDto;
 import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.review.repository.DiodeRepository;
@@ -78,19 +78,18 @@ public class DirectReviewService {
 
 
     // 설계값과 데이터베이스에 저장된 기준 값 검증
-    private List<ReviewDto.Result> reviewPart(List<ExcelMapperDto> parsedRows, ReviewDto.Verification verificationDto) {
+    private List<ReviewDto.Result> reviewPart(List<DirectExcelMapperDto> parsedRows, ReviewDto.Verification verificationDto) {
 
         return parsedRows.stream()
-//                .skip(1) // DB 조회용 partName 제외
                 .filter(row -> row.needValidate())
-                .map(dto -> {
-                    String partName = dto.getPartName();
-                    Number designValue = dto.getDesignValue();
+                .map(row -> {
+                    String partName = row.getPartName();
+                    Number designValue = row.getDesignValue();
 
                     boolean validateResult = validationService.validateDesignValue(partName, verificationDto, designValue);
                     return ReviewDto.Result.builder()
-                            .partName(dto.getPartName())
-                            .designValue(dto.getDesignValue())
+                            .partName(row.getPartName())
+                            .designValue(row.getDesignValue())
                             .passValidate(validateResult)
                             .build();
                 })

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import qraps.platform.global.error.exception.EntityNotFoundException;
-import qraps.platform.review.dto.ExcelMapper;
+import qraps.platform.review.dto.ExpertExcelMapperDto;
 import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.review.dto.ValidateResultDto;
@@ -33,6 +33,9 @@ public class DesignExpertSystemReviewController {
         this.validationService = validationService;
     }
 
+    /**
+     * 사용자가 브라우저에서 호출하는 API
+     */
     @PostMapping(path = "review/expert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String reviewFromExpertSystem(@ModelAttribute("reviewDto") ReviewPageDto reviewDto,
                                          @RequestParam("file_input") MultipartFile uploadedFile,
@@ -74,7 +77,7 @@ public class DesignExpertSystemReviewController {
                     "검증할 소자의 partNo, 검증 대상의 이름, 검증 대상의 설계값이 필수 항목입니다.\n")
     @ResponseBody
     @PostMapping("review/part")
-    public ValidateResultDto validatePart(@RequestBody ExcelMapper excelRow, HttpServletRequest request) {
+    public ValidateResultDto validatePart(@RequestBody ExpertExcelMapperDto excelRow, HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         ReviewDto.Verification verificationDto = Optional.ofNullable((ReviewDto.Verification) session.getAttribute(excelRow.getPartNo()))
