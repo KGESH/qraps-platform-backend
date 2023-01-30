@@ -55,7 +55,7 @@ public class DesignExpertSystemReviewController {
                     "review/part API 1회 요청마다 세션에 저장된 엔티티를 사용합니다\n.")
     @ResponseBody
     @PostMapping("review/start")
-    public boolean startReviewTransaction(@RequestBody ReviewPageDto reviewDto, HttpServletRequest request) {
+    public ReviewDto.Verification startReviewTransaction(@RequestBody ReviewPageDto reviewDto, HttpServletRequest request) {
 
         ReviewDto.Verification verificationDto = validationService.getVerificationDto(reviewDto);
 
@@ -63,8 +63,8 @@ public class DesignExpertSystemReviewController {
         session.setAttribute(reviewDto.getPartNo(), verificationDto);
         session.setAttribute("reviewDto", reviewDto);
 
-        // Todo: replace
-        return true;
+        // Todo: replace return type
+        return verificationDto;
     }
 
 
