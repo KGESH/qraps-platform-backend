@@ -6,6 +6,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import qraps.platform.global.error.exception.BusinessException;
+import qraps.platform.global.error.exception.ErrorCode;
 import qraps.platform.review.dto.ExcelColumn;
 import qraps.platform.review.dto.ExcelMapperDto;
 import qraps.platform.utils.ParsedExcel;
@@ -29,7 +31,8 @@ public class ExcelParseService {
 
         // header partNo
         Row headerRow = sheet.getRow(1);
-        String partNo = Optional.ofNullable(headerRow.getCell(ExcelColumn.DESIGN_VALUE.getIndex()).getStringCellValue()).orElseThrow(() -> new RuntimeException("partNo 항목의 설계값이 누락되었습니다."));
+        String partNo = Optional.ofNullable(headerRow.getCell(ExcelColumn.DESIGN_VALUE.getIndex()).getStringCellValue())
+                .orElseThrow(() -> new BusinessException("partNo 항목의 설계값이 누락되었습니다.", ErrorCode.INVALID_INPUT_VALUE));
 
 
         // header 제외
@@ -50,9 +53,12 @@ public class ExcelParseService {
             String partName = row.getCell(ExcelColumn.PART_NAME.getIndex()).getStringCellValue();
             int note = (int) row.getCell(ExcelColumn.NOTE.getIndex()).getNumericCellValue();
             Optional<String> unit = Optional.ofNullable(row.getCell(ExcelColumn.UNIT.getIndex())).map(Cell::getStringCellValue);
-            Number designValue = Optional.ofNullable(row.getCell(ExcelColumn.DESIGN_VALUE.getIndex()))
-                    .map(Cell::getNumericCellValue)
-                    .orElseThrow(() -> new RuntimeException("설계값이 비어있습니다."));
+
+            if (row.getCell(ExcelColumn.DESIGN_VALUE.getIndex()).getCellType() == Cell.CELL_TYPE_BLANK) {
+                throw new BusinessException("설계값이 비어있습니다. 검증 대상: " + partName, ErrorCode.INVALID_INPUT_VALUE);
+            }
+
+            Number designValue = row.getCell(ExcelColumn.DESIGN_VALUE.getIndex()).getNumericCellValue();
             String needValidate = row.getCell(ExcelColumn.NEED_VALIDATE.getIndex()).getStringCellValue();
 
 
