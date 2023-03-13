@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS diode;
 CREATE TABLE diode
 (
     partNo                              VARCHAR(20),
-    type                                VARCHAR(20),
-    manufacturer_name                   VARCHAR(20),
+    type                                VARCHAR(40),
+    manufacturer_name                   VARCHAR(40),
     oprating_temperature_min            INT,
     oprating_temperature_max            INT,
     storage_temperature_min             INT,
@@ -47,17 +47,17 @@ VALUES ('diode', 3, 0,
         0,
         0, 0, 0, 0,
         NULL, NULL, NULL);
-INSERT INTO diode
-VALUES ('BAV16W/1N4148W', 'fast_switching', 'DIODES',
-        -55, 150, -55, 155, NULL, NULL,
-        0.30,
-        NULL, NULL,
-        100.00, NULL,
-        NULL, 2.00, NULL,
-        4.000,
-        1, 1, 1, NULL, 1,
-        '/pdrpic/3diode02p0.png',
-        2, 1, 1, 2,
-        '/pdrpic/3diode02p1.png', '/pdrpic/3diode02p2.png', '/pdrpic/3diode02p3.png');
+-- INSERT INTO diode
+-- VALUES ('BAV16W/1N4148W', 'fast_switching', 'DIODES',
+--         -55, 150, -55, 155, NULL, NULL,
+--         0.30,
+--         NULL, NULL,
+--         100.00, NULL,
+--         NULL, 2.00, NULL,
+--         4.000,
+--         1, 1, 1, NULL, 1,
+--         '/pdrpic/3diode02p0.png',
+--         2, 1, 1, 2,
+--         '/pdrpic/3diode02p1.png', '/pdrpic/3diode02p2.png', '/pdrpic/3diode02p3.png');
 SELECT *
 FROM diode;

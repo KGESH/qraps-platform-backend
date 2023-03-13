@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS bjt;
 CREATE TABLE bjt
 (
     partNo                                   VARCHAR(20),
-    type                                     VARCHAR(20),
-    manufacturer_name                        VARCHAR(20),
+    type                                     VARCHAR(40),
+    manufacturer_name                        VARCHAR(40),
     oprating_temperature_min                 INT,
     oprating_temperature_max                 INT,
     storage_temperature_min                  INT,
@@ -58,19 +58,19 @@ VALUES ('bjt', 3, 0,
         0,
         0, 0, 0, 0, 0, 0, 0, 0,
         NULL, NULL, NULL);
-INSERT INTO bjt
-VALUES ('2N3906', 'pnp_general_purpose', 'on_semiconductor',
-        -55, 150, -55, 155, NULL, NULL,
-        40.0, 40.0, 5.0, 0.200,
-        50.000, 50.000,
-        100, 300,
-        0.40,
-        250.0,
-        100, 400,
-        35.0, 35.0, 75.0,
-        NULL, NULL, NULL, NULL, NULL,
-        '/pdrpic/2bjt02p0.png',
-        3, 1, 1, 2, 3, 0, 0, 0,
-        '/pdrpic/2bjt02p1.png', '/pdrpic/2bjt02p2.png', '/pdrpic/2bjt02p3.png');
+-- INSERT INTO bjt
+-- VALUES ('2N3906', 'pnp_general_purpose', 'on_semiconductor',
+--         -55, 150, -55, 155, NULL, NULL,
+--         40.0, 40.0, 5.0, 0.200,
+--         50.000, 50.000,
+--         100, 300,
+--         0.40,
+--         250.0,
+--         100, 400,
+--         35.0, 35.0, 75.0,
+--         NULL, NULL, NULL, NULL, NULL,
+--         '/pdrpic/2bjt02p0.png',
+--         3, 1, 1, 2, 3, 0, 0, 0,
+--         '/pdrpic/2bjt02p1.png', '/pdrpic/2bjt02p2.png', '/pdrpic/2bjt02p3.png');
 SELECT *
 FROM bjt;

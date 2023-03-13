@@ -3,8 +3,8 @@ DROP TABLE IF EXISTS sdic;
 CREATE TABLE sdic
 (
     partNo                         VARCHAR(20),
-    type                           VARCHAR(20),
-    manufacturer_name              VARCHAR(20),
+    type                           VARCHAR(40),
+    manufacturer_name              VARCHAR(40),
     oprating_temperature_min       INT,
     oprating_temperature_max       INT,
     storage_temperature_min        INT,
@@ -71,20 +71,21 @@ VALUES ('sdic', 5, 0,
         0,
         0, 0, 0, 0, 0,
         NULL, NULL, NULL, NULL, NULL);
-INSERT INTO sdic
-VALUES ('LM2576HVSX-ADJ/NOPB', 'step_down', 'TI',
-        -40, 125, -65, 150, NULL, 150, 3.5, 60.0, 1.2, 57.0,
-        4.0, 4.0,
-        NULL, 3.0, 1.60, 1.70,
-        NULL, 5.000, 12.000, NULL, 77.0, NULL, 46.8, 52.0, 57.2, 3.5, 5.8, 6.9,
-#         100, 100,
-        NULL, NULL,
-        2000, 2000, NULL, NULL,
-        NULL,
-        NULL, 1, 1, 1, NULL, 0,
-        '/pdrpic/1sdic02p0.png',
-        5, NULL, NULL, NULL, NULL,
-        '/pdrpic/1sdic02p1.png', '/pdrpic/1sdic02p2.png', '/pdrpic/1sdic02p3.png', '/pdrpic/1sdic02p4.png',
-        '/pdrpic/1sdic02p5.png');
-SELECT *
-FROM sdic;
+# INSERT INTO sdic
+# VALUES ('LM2576HVSX-ADJ/NOPB', 'step_down', 'TI',
+#         -40, 125, -65, 150, NULL, 150, 3.5, 60.0, 1.2, 57.0,
+#         4.0, 4.0,
+#         NULL, 3.0, 1.60, 1.70,
+#         NULL, 5.000, 12.000, NULL, 77.0, NULL, 46.8, 52.0, 57.2, 3.5, 5.8, 6.9,
+# #         100, 100,
+#         NULL, NULL,
+#         2000, 2000, NULL, NULL,
+#         NULL,
+#         NULL, 1, 1, 1, NULL, 0,
+#         '/pdrpic/1sdic02p0.png',
+#         5, NULL, NULL, NULL, NULL,
+#         '/pdrpic/1sdic02p1.png', '/pdrpic/1sdic02p2.png', '/pdrpic/1sdic02p3.png', '/pdrpic/1sdic02p4.png',
+#         '/pdrpic/1sdic02p5.png');
+# SELECT *
+# FROM sdic;
+
