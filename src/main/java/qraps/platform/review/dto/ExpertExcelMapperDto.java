@@ -31,6 +31,6 @@ public class ExpertExcelMapperDto {
 
     // 설계 값
     @Schema(example = "125", required = true)
-    private Number designValue;
+    private Object designValue;
 
 }
