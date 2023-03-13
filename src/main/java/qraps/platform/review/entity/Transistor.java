@@ -1,5 +1,6 @@
 package qraps.platform.review.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -103,6 +104,7 @@ public class Transistor {
     private Integer base_resistor;
     @Column(name = "base_zener")
     private Integer base_zener;
+    @JsonProperty("Darlington") // Pascal case 때문에 Object Mapper 변환시 필요
     @Column(name = "Darlington")
     private Integer Darlington;
     @Column(name = "picture1")
@@ -114,4 +116,5 @@ public class Transistor {
 
     public Transistor() {
     }
+
 }
