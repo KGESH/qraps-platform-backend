@@ -12,13 +12,12 @@ import qraps.platform.review.dto.ExpertExcelMapperDto;
 import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.review.dto.ValidateResultDto;
+import qraps.platform.review.service.CacheService;
 import qraps.platform.review.service.ExpertSystemReviewService;
 import qraps.platform.review.service.ValidationService;
 import qraps.platform.web.controller.dto.ReviewPageDto;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @Tag(name = "ExpertSystemReview", description = "전문가 시스템을 통한 검증 API")
 @Controller
@@ -26,11 +25,13 @@ public class DesignExpertSystemReviewController {
 
     private final ExpertSystemReviewService expertSystemReviewService;
     private final ValidationService validationService;
+    private final CacheService cacheService;
 
     @Autowired
-    public DesignExpertSystemReviewController(ExpertSystemReviewService expertSystemReviewService, ValidationService validationService) {
+    public DesignExpertSystemReviewController(ExpertSystemReviewService expertSystemReviewService, ValidationService validationService, CacheService cacheService) {
         this.expertSystemReviewService = expertSystemReviewService;
         this.validationService = validationService;
+        this.cacheService = cacheService;
     }
 
     /**
@@ -39,14 +40,36 @@ public class DesignExpertSystemReviewController {
     @PostMapping(path = "review/expert", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String reviewFromExpertSystem(@ModelAttribute("reviewDto") ReviewPageDto reviewDto,
                                          @RequestParam("file_input") MultipartFile uploadedFile,
-                                         HttpServletRequest request) {
+                                         HttpSession session) {
 
-        HttpSession session = request.getSession();
-        ResponseReviewDto reviewResult = expertSystemReviewService.reviewFromExpertSystem(reviewDto, uploadedFile);
+
+        session.setAttribute("reviewDto", reviewDto);
+        System.out.println(uploadedFile.getName());
+        System.out.println(uploadedFile.getContentType());
+        ResponseReviewDto reviewResult = expertSystemReviewService.reviewFromExpertSystem(reviewDto, uploadedFile, session.getId());
 
         session.setAttribute("reviewResult", reviewResult);
-        return "redirect:/validation_result";
+
+
+        System.out.println("Validate target");
+        System.out.println(reviewDto.getValidTarget());
+
+        switch (reviewDto.getValidTarget()) {
+            case IC:
+                return "redirect:/validation_result_page_1";
+
+            case TRANSISTOR:
+                return "redirect:/validation_result_page_2";
+
+            case DIODE:
+                return "redirect:/validation_result_page_3";
+
+        }
+
+
+        return "redirect:/validation_center";
     }
+
 
     /**
      * Todo: Request 사용자 ID 필요
@@ -58,16 +81,22 @@ public class DesignExpertSystemReviewController {
                     "review/part API 1회 요청마다 세션에 저장된 엔티티를 사용합니다\n.")
     @ResponseBody
     @PostMapping("review/start")
-    public ReviewDto.Verification startReviewTransaction(@RequestBody ReviewPageDto reviewDto, HttpServletRequest request) {
+    public ReviewDto.Start startReviewTransaction(@RequestParam String sessionId, @RequestBody ReviewPageDto reviewDto) {
 
         ReviewDto.Verification verificationDto = validationService.getVerificationDto(reviewDto);
 
-        HttpSession session = request.getSession();
-        session.setAttribute(reviewDto.getPartNo(), verificationDto);
-        session.setAttribute("reviewDto", reviewDto);
+        String verificationDtoKey = "verificationDto/" + sessionId + "/" + reviewDto.getPartNo();
+        String reviewDtoKey = "reviewDto/" + sessionId + "/" + reviewDto.getPartNo();
 
-        // Todo: replace return type
-        return verificationDto;
+        cacheService.storeValue(verificationDtoKey, verificationDto);
+        cacheService.storeValue(reviewDtoKey, reviewDto);
+
+
+        System.out.println("review/start");
+        System.out.println(reviewDto.toString());
+        return ReviewDto.Start.builder()
+                .start_check(true)
+                .build();
     }
 
 
@@ -77,11 +106,14 @@ public class DesignExpertSystemReviewController {
                     "검증할 소자의 partNo, 검증 대상의 이름, 검증 대상의 설계값이 필수 항목입니다.\n")
     @ResponseBody
     @PostMapping("review/part")
-    public ValidateResultDto validatePart(@RequestBody ExpertExcelMapperDto excelRow, HttpServletRequest request) {
+    public ValidateResultDto validatePart(@RequestBody ExpertExcelMapperDto excelRow, @RequestParam String sessionId) {
+        System.out.println("Part Session ID: " + sessionId);
+        System.out.println(excelRow.getPartNo());
+        System.out.println(excelRow.getDesignValue());
 
-        HttpSession session = request.getSession();
-        ReviewDto.Verification verificationDto = Optional.ofNullable((ReviewDto.Verification) session.getAttribute(excelRow.getPartNo()))
-                .orElseThrow(() -> new EntityNotFoundException("검증 대상이 세션에 존재하지 않습니다."));
+        String verificationDtoKey = "verificationDto/" + sessionId + "/" + excelRow.getPartNo();
+        ReviewDto.Verification verificationDto = (ReviewDto.Verification) cacheService.getValue(verificationDtoKey)
+                .orElseThrow(() -> new EntityNotFoundException("검증 대상이 서버 메모리에 존재하지 않습니다."));
 
         return validationService.validate(excelRow, verificationDto);
     }

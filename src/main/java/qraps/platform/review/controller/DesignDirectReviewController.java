@@ -20,6 +20,7 @@ import org.thymeleaf.context.Context;
 import qraps.platform.global.error.exception.BusinessException;
 import qraps.platform.global.error.exception.ErrorCode;
 import qraps.platform.review.dto.ResponseReviewDto;
+import qraps.platform.review.service.CacheService;
 import qraps.platform.review.service.DirectReviewService;
 import qraps.platform.review.service.ValidationService;
 import qraps.platform.web.controller.dto.ReviewPageDto;
@@ -38,15 +39,16 @@ public class DesignDirectReviewController {
     private final DirectReviewService designReviewService;
     private TemplateEngine templateEngine;
 
+
     @Autowired
-    public DesignDirectReviewController(DirectReviewService designReviewService, ValidationService validationService, TemplateEngine templateEngine) {
+    public DesignDirectReviewController(DirectReviewService designReviewService, ValidationService validationService, TemplateEngine templateEngine, CacheService cacheService) {
         this.designReviewService = designReviewService;
         this.templateEngine = templateEngine;
     }
 
-
     @PostMapping(path = "review/direct", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String review(@ModelAttribute("reviewDto") ReviewPageDto reviewDto, @RequestParam(value = "file_input") MultipartFile uploadedFile, HttpServletRequest request) throws Exception {
+
         if (uploadedFile.isEmpty()) {
             throw new BusinessException("검증 엑셀 파일이 누락되었습니다.", ErrorCode.INVALID_INPUT_VALUE);
         }
@@ -101,3 +103,5 @@ public class DesignDirectReviewController {
     }
 
 }
+
+

@@ -18,9 +18,11 @@ public class ExpertSystemReviewService {
      * 검증 대상, 검증 대상 partNo
      * Excel 파일 전달
      */
-    public ResponseReviewDto reviewFromExpertSystem(ReviewPageDto reviewDto, MultipartFile uploadedFile) {
+    public ResponseReviewDto reviewFromExpertSystem(ReviewPageDto reviewDto, MultipartFile uploadedFile, String sessionId) {
 
-        String url = "http://expert:5001/expert/review";
+        System.out.println("session ID: " + sessionId);
+//        String url = "http://expert:5000/expert/review";
+        String url = "http://localhost:5000/expert/review";
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("file", uploadedFile.getResource());
 
@@ -29,7 +31,8 @@ public class ExpertSystemReviewService {
                 .post()
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("validTarget", reviewDto.getValidTarget().getTarget())
-                        .queryParam("partNo", reviewDto.getPartNo())
+//                        .queryParam("partNo", reviewDto.getPartNo())
+                        .queryParam("sessionId", sessionId)
                         .build())
                 .contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(builder.build()))

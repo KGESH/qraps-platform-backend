@@ -10,8 +10,8 @@ import qraps.platform.global.error.exception.ErrorCode;
  */
 public enum ValidateTarget {
     IC("IC", "Step-down IC", 1),
-    TRANSISTOR("Transistor", "Transistor", 2),
-    DIODE("Diode", "Diode", 3);
+    TRANSISTOR("TRANSISTOR", "Transistor", 2),
+    DIODE("DIODE", "Diode", 3);
 
     private final String target;
     private final String description;
@@ -29,10 +29,10 @@ public enum ValidateTarget {
             case "IC":
                 return ValidateTarget.IC;
 
-            case "Transistor":
+            case "TRANSISTOR":
                 return ValidateTarget.TRANSISTOR;
 
-            case "Diode":
+            case "DIODE":
                 return ValidateTarget.DIODE;
 
             default:

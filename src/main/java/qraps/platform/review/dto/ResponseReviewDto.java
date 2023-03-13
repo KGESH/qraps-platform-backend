@@ -10,10 +10,20 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class ResponseReviewDto {
-    private String targetName;
+    private String partNo;
     private List<ReviewDto.Result> reviewResults;
     private boolean passReview;
 
+    //"type": "step_down",
+    //private String type;
+
+    //"manufacturer_name": "TI",
+    //private String manufacturerName;
+
     public ResponseReviewDto() {
     }
+
 }
+
+
+

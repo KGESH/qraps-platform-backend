@@ -30,7 +30,7 @@ public class ReportController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE);
-        String fileName = reviewResult.getTargetName() + "_report.pdf";
+        String fileName = reviewResult.getPartNo() + "_report.pdf";
         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"");
 
         byte[] report = reportService.generateReport(reviewResult);

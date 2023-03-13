@@ -46,9 +46,9 @@ class ExpertSystemReviewServiceTest {
 
         //when
         ReviewDto.Verification verificationDto = validationService.getVerificationDto(reviewPageDto);
-        ExpertExcelMapperDto validateMinRequest = createExpertSystemMockRequest("oprating_temperature_min", 1);
-        ExpertExcelMapperDto validateEqualRequest = createExpertSystemMockRequest("efficiency_typ", 100);
-        ExpertExcelMapperDto validateMaxRequest = createExpertSystemMockRequest("oprating_temperature_max", 9999);
+        ExpertExcelMapperDto validateMinRequest = createExpertSystemMockRequest("efficiency_min", 11);
+        ExpertExcelMapperDto validateEqualRequest = createExpertSystemMockRequest("efficiency_typ", 44);
+        ExpertExcelMapperDto validateMaxRequest = createExpertSystemMockRequest("efficiency_max", 99);
         ExpertExcelMapperDto validateToleranceRequest = createExpertSystemMockRequest("thermal_recovery_typ", 100);
 
         ValidateResultDto validateMinResult = validationService.validate(validateMinRequest, verificationDto);
@@ -58,13 +58,13 @@ class ExpertSystemReviewServiceTest {
 
 
         //then
-        assertThat(validateMinResult.getVerificationTarget()).isEqualTo("oprating_temperature_min");
+        assertThat(validateMinResult.getVerificationTarget()).isEqualTo("efficiency_min");
         assertThat(validateMinResult.isValid()).isEqualTo(true);
 
         assertThat(validateEqualResult.getVerificationTarget()).isEqualTo("efficiency_typ");
         assertThat(validateEqualResult.isValid()).isEqualTo(true);
 
-        assertThat(validateMaxResult.getVerificationTarget()).isEqualTo("oprating_temperature_max");
+        assertThat(validateMaxResult.getVerificationTarget()).isEqualTo("efficiency_max");
         assertThat(validateMaxResult.isValid()).isEqualTo(true);
 
         assertThat(validateToleranceResult.getVerificationTarget()).isEqualTo("thermal_recovery_typ");
@@ -77,19 +77,21 @@ class ExpertSystemReviewServiceTest {
     }
 
     private StepDownIC createMockCriteria() {
-        return StepDownIC.builder().partNo(criteriaPartNo)
-                .oprating_temperature_min(Criteria.MIN.getCriteria())
-                .efficiency_typ((double) Criteria.EQUAL.getCriteria())
-                .oprating_temperature_max(Criteria.MAX.getCriteria())
+        return StepDownIC.builder()
+                .partNo(criteriaPartNo)
+                .efficiency_min((double) Criteria.MIN.getCriteria())
+                .efficiency_typ((double) Criteria.RANGE.getCriteria())
+                .efficiency_max((double) Criteria.MAX.getCriteria())
                 .thermal_recovery_typ(Criteria.TOLERANCE.getCriteria())
                 .build();
     }
 
     private StepDownIC getMockSdic() {
-        return StepDownIC.builder().partNo(mockPartNo)
-                .oprating_temperature_min(5)
-                .efficiency_typ(100.0)
-                .oprating_temperature_max(10)
+        return StepDownIC.builder()
+                .partNo(mockPartNo)
+                .efficiency_min(0.0)
+                .efficiency_typ(50.0)
+                .efficiency_max(100.0)
                 .thermal_recovery_typ(100)
                 .build();
     }

@@ -7,7 +7,7 @@ import qraps.platform.global.error.exception.BusinessException;
 import qraps.platform.global.error.exception.EntityNotFoundException;
 import qraps.platform.global.error.exception.ErrorCode;
 import qraps.platform.review.dto.Criteria;
-import qraps.platform.review.dto.ExcelMapper;
+import qraps.platform.review.dto.ExpertExcelMapperDto;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.review.dto.ValidateResultDto;
 import qraps.platform.review.entity.PartList;
@@ -21,6 +21,7 @@ import qraps.platform.web.controller.dto.ValidateTarget;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -114,11 +115,11 @@ public class ValidationService {
         }
     }
 
-    public ValidateResultDto validate(ExcelMapper excelRow, ReviewDto.Verification verificationDto) {
+    public ValidateResultDto validate(ExpertExcelMapperDto excelRow, ReviewDto.Verification verificationDto) {
 
         // 검증 항목 row
         String targetName = excelRow.getVerificationTarget();
-        Number designValue = excelRow.getDesignValue();
+        Object designValue = excelRow.getDesignValue();
 
         boolean isValid = validateDesignValue(targetName, verificationDto, designValue);
 
@@ -133,37 +134,59 @@ public class ValidationService {
      * Criteria
      * 0: N/A
      * 1: Min
-     * 2: Equal
+     * 2: Range 범위에 설계값이 포함되거나(경계 포함), DB의 typ 컬럼의 값과 일치하면 pass
      * 3: Max
      * 4: Datasheet 기준 값의 -20% ~ +20% 사이에 설계 값이 포함(경계 포함)되면 pass
      * 5: 별 의미 없음
      */
-    public boolean validateDesignValue(String partName, ReviewDto.Verification verificationDto, Number designValue) {
+    public boolean validateDesignValue(String partName, ReviewDto.Verification verificationDto, Object designValue) {
 
         Map<String, Object> referenceEntity = verificationDto.getTarget();
         Map<String, Object> criteria = verificationDto.getCriteria();
-        Number referenceValue = (Number) (Optional.ofNullable(referenceEntity.get(partName))
-                .orElseThrow(() -> new EntityNotFoundException("DB에 저장된 해당 필드가 NULL이거나 존재하지 않습니다.\n" + "필드: " + partName)));
+        Optional<Object> referenceOptional = Optional.ofNullable(referenceEntity.get(partName));
 
 
-        int criteriaIndex = ((Number) criteria.get(partName)).intValue();
+        int criteriaIndex;
+        Object criteriaValue = criteria.get(partName);
+        if (criteriaValue instanceof String) {
+            criteriaIndex = Integer.parseInt((String) criteriaValue);
+        } else if (criteriaValue instanceof Number) {
+            criteriaIndex = ((Number) criteriaValue).intValue();
+        } else {
+            throw new BusinessException("Value must be a string or a number.", ErrorCode.INVALID_TYPE_VALUE);
+        }
+
+
         Criteria criteriaEnum = Criteria.values()[criteriaIndex];
-
         switch (criteriaEnum) {
-            case NA:
-                throw new BusinessException("Unexpected criteria value: " + criteriaIndex, ErrorCode.INVALID_INPUT_VALUE);
+            case NA: /** DB 조회한 값이 null이면 true 반환 */
+                return referenceOptional.map(referenceValue -> verifyEqualValue(designValue, referenceValue))
+                        .orElse(true);
+//                throw new BusinessException("Unexpected criteria value: " + criteriaIndex, ErrorCode.INVALID_INPUT_VALUE);
 
             case MIN:
-                return verifyMinValue(designValue, referenceValue);
+//                        verifyMinValue(designValue, referenceOptional
+                return referenceOptional.map(referenceValue -> verifyMinValue(Double.parseDouble(designValue.toString()), ((Number) referenceValue))).orElse(true);
+//                        .orElseThrow(() -> new EntityNotFoundException("DB에 저장된 해당 필드가 NULL이거나 존재하지 않습니다.\n" + "필드: " + partName + "기준: " + Criteria.MIN)));
+
+            case RANGE: /** 요구사항 확정까지  무조건 pass 처리 */
+                return true;
+//                return referenceOptional.map(referenceValue -> verifyEqualValue(designValue, referenceValue)).orElse(true);
+//                        verifyEqualValue(designValue,
+//                        referenceOptional.orElseThrow(() -> new EntityNotFoundException("DB에 저장된 해당 필드가 NULL이거나 존재하지 않습니다.\n" + "필드: " + partName + "기준: " + Criteria.RANGE)));
+//                return verifyRangeValue(partName, designValue, referenceEntity, referenceOptional);
 
             case MAX:
-                return verifyMaxValue(designValue, referenceValue);
+                return referenceOptional.map(referenceValue -> verifyMaxValue(Double.parseDouble(designValue.toString()), ((Number) referenceValue))).orElse(true);
+//                return verifyMaxValue(designValue, referenceOptional
+//                        .orElseThrow(() -> new EntityNotFoundException("DB에 저장된 해당 필드가 NULL이거나 존재하지 않습니다.\n" + "필드: " + partName + "기준: " + Criteria.MAX)));
 
-            case EQUAL:
-                return verifyEqualValue(designValue, referenceValue);
-
+            /**
+             * 요구사항 확정까지  무조건 pass 처리
+             * DB 조회한 값이 null이면 true 반환
+             * */
             case TOLERANCE:
-                return verifyToleranceValue(designValue, referenceValue);
+                return referenceOptional.map(referenceValue -> verifyToleranceValue(Double.parseDouble(designValue.toString()), ((Number) referenceValue))).orElse(true);
 
             case RESERVED:
                 throw new BusinessException("Unexpected criteria value: " + criteriaIndex, ErrorCode.INVALID_INPUT_VALUE);
@@ -175,16 +198,54 @@ public class ValidationService {
 
     }
 
-    private boolean verifyMinValue(Number designValue, Number referenceValue) {
-        return designValue.doubleValue() <= referenceValue.doubleValue();
-    }
 
-    private boolean verifyMaxValue(Number designValue, Number referenceValue) {
+    /**
+     * 설계값이 기준 min값보다 커야함
+     */
+    private boolean verifyMinValue(Number designValue, Number referenceValue) {
         return designValue.doubleValue() >= referenceValue.doubleValue();
     }
 
-    private boolean verifyEqualValue(Number designValue, Number referenceValue) {
-        return designValue.doubleValue() == referenceValue.doubleValue();
+    /**
+     * 설계값이 기준 max값보다 작아야함
+     */
+    private boolean verifyMaxValue(Number designValue, Number referenceValue) {
+        return designValue.doubleValue() <= referenceValue.doubleValue();
+    }
+
+    /**
+     * 설계값이 기준 범위 값 사이에 있거나
+     * 기준 값과 같아야 함
+     */
+    private boolean verifyRangeValue(String partName, Number designValue, Map<String, Object> referenceEntity, Number referenceValue) {
+        String beginColumnName = partName.replace("typ", "min");
+        String endColumnName = partName.replace("typ", "max");
+        if (isRangeColumnExist(referenceEntity, beginColumnName, endColumnName)) {
+            return verifyRange(referenceEntity, designValue, beginColumnName, endColumnName);
+        }
+
+        return verifyEqualValue(designValue, referenceValue);
+    }
+
+    private boolean verifyRange(Map<String, Object> referenceEntity, Number designValue, String beginColumnName, String endColumnName) {
+        Number beginValue = (Number) referenceEntity.get(beginColumnName);
+        Number endValue = (Number) referenceEntity.get(endColumnName);
+
+        return (beginValue.doubleValue() <= designValue.doubleValue()) && (designValue.doubleValue() <= endValue.doubleValue());
+    }
+
+    private boolean isRangeColumnExist(Map<String, Object> referenceEntity, String beginColumnName, String endColumnName) {
+        return referenceEntity.get(beginColumnName) != null && referenceEntity.get(endColumnName) != null;
+    }
+
+    private boolean verifyEqualValue(Object designValue, Object referenceValue) {
+
+        if (designValue instanceof Number) {
+            return ((Number) designValue).doubleValue() == ((Number) referenceValue).doubleValue();
+
+        } else {
+            return Objects.equals(designValue, referenceValue);
+        }
     }
 
     /**

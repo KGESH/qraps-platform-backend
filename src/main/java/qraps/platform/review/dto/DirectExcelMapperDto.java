@@ -21,7 +21,7 @@ public class DirectExcelMapperDto {
     private Optional<String> unit;
 
     // 설계 값
-    private Number designValue;
+    private Optional<Number> designValue;
 
     // 검증 대상
     private String needValidate;

@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ReviewPageDto {
-    @Schema(type = "String", allowableValues = {"IC", "Transistor", "Diode"})
+    @Schema(type = "String", allowableValues = {"IC", "TRANSISTOR", "DIODE"})
     private ValidateTarget validTarget;
     private String partNo;
 

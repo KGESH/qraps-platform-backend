@@ -3,7 +3,7 @@ package qraps.platform.review.dto;
 public enum Criteria {
     NA(0),
     MIN(1),
-    EQUAL(2),
+    RANGE(2),
     MAX(3),
     TOLERANCE(4),
     RESERVED(5); // 의미 없는 값

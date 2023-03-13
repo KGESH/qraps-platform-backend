@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class DirectReviewService {
 
-    private final ExcelParseService excelParseService;
+    private final ExcelService excelService;
 
     private final ValidationService validationService;
 
@@ -39,8 +39,8 @@ public class DirectReviewService {
 
 
     @Autowired
-    public DirectReviewService(ExcelParseService excelParseService, ValidationService validationService) {
-        this.excelParseService = excelParseService;
+    public DirectReviewService(ExcelService excelService, ValidationService validationService) {
+        this.excelService = excelService;
         this.validationService = validationService;
     }
 
@@ -49,7 +49,7 @@ public class DirectReviewService {
      * Todo: Partlist 테이블 변경되면 수정
      */
     public ResponseReviewDto directReview(ValidateTarget target, MultipartFile file) throws IOException {
-        ParsedExcel parsedExcel = excelParseService.parseExcel(file.getInputStream());
+        ParsedExcel parsedExcel = excelService.parseExcel(file.getInputStream());
         String partNo = parsedExcel.getPartNo();
 
         ReviewPageDto pageDto = ReviewPageDto.builder()
@@ -70,7 +70,7 @@ public class DirectReviewService {
 
         List<ReviewDto.Result> reviewResults = reviewPart(parsedExcel.getParsedRows(), verificationDto);
         return ResponseReviewDto.builder()
-                .targetName(target.getTarget())
+                .partNo(target.getTarget())
                 .reviewResults(reviewResults)
                 .passReview(validatePassReview(reviewResults))
                 .build();
@@ -84,13 +84,13 @@ public class DirectReviewService {
                 .filter(row -> row.needValidate())
                 .map(row -> {
                     String partName = row.getPartName();
-                    Number designValue = row.getDesignValue();
+                    String designValue = row.getDesignValue().orElse(null).toString();
 
-                    boolean validateResult = validationService.validateDesignValue(partName, verificationDto, designValue);
+                    boolean validationResult = validationService.validateDesignValue(partName, verificationDto, designValue);
                     return ReviewDto.Result.builder()
                             .partName(row.getPartName())
                             .designValue(row.getDesignValue())
-                            .passValidate(validateResult)
+                            .verification(validationResult)
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -99,7 +99,7 @@ public class DirectReviewService {
 
     // 모든 rows 중 검증값이 하나라도 맞지 않으면 최종 검증 결과 FAIL
     private boolean validatePassReview(List<ReviewDto.Result> reviewResults) {
-        return reviewResults.stream().allMatch(ReviewDto.Result::isPassValidate);
+        return reviewResults.stream().allMatch(ReviewDto.Result::isVerification);
     }
 
 }

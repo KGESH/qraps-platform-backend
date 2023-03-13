@@ -7,6 +7,7 @@ import qraps.platform.report.dto.ReportDto;
 import qraps.platform.review.dto.ResponseReviewDto;
 import qraps.platform.review.dto.ReviewDto;
 import qraps.platform.utils.MockHelper;
+import qraps.platform.web.controller.dto.ValidateTarget;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -59,18 +60,24 @@ public class ReportService {
 
     private byte[] compileReportToPdf(ResponseReviewDto reviewResult, InputStream jasperReportTemplateFileStream) throws Exception {
 
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(reviewResult.getReviewResults());
+        JRBeanCollectionDataSource fieldsDataSource = new JRBeanCollectionDataSource(reviewResult.getReviewResults());
         JasperReport report = JasperCompileManager.compileReport(jasperReportTemplateFileStream);
         Map<String, Object> reportParams = new HashMap<>();
 
 
+        // 소자 체크 DATA: Step Down IC
+        String target = ValidateTarget.IC.getTarget();
+        String partNo = "";
+
+
         String passResult = reviewResult.isPassReview() ? "PASS" : "FAIL";
-        reportParams.put("title", reviewResult.getTargetName());
+        reportParams.put("title", reviewResult.getPartNo());
         reportParams.put("passResult", passResult);
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(report, reportParams, beanCollectionDataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(report, reportParams, fieldsDataSource);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+
 
         return outputStream.toByteArray();
     }

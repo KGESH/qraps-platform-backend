@@ -58,6 +58,14 @@ public class ReviewDto {
     @Setter
     @Builder
     @AllArgsConstructor
+    public static class Start {
+        private boolean start_check;
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
     @ToString
     public static class Verification {
         private Map<String, Object> criteria;
@@ -78,7 +86,7 @@ public class ReviewDto {
     public static class Result {
         private String partName;
         private Object designValue;
-        private boolean passValidate;
+        private boolean verification;
 
         public Result() {
         }
@@ -88,7 +96,7 @@ public class ReviewDto {
          * pass, fail 문자 출력
          */
         public String getPassString() {
-            return passValidate ? "O" : "X";
+            return verification ? "OK" : "NG";
         }
     }
 }

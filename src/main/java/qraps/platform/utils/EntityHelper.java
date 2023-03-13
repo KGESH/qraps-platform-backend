@@ -1,5 +1,7 @@
 package qraps.platform.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +20,12 @@ public class EntityHelper {
         }
 
         return map;
+    }
+
+
+    public static <T> T convertMapToEntity(Object source, Class<T> toValueType) {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(source, toValueType);
     }
 
 }
