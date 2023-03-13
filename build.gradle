@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.h2database:h2'
     implementation 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework:spring-test:${spring.version}'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

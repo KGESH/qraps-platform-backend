@@ -8,16 +8,16 @@ services:
       - "80:8080"
     depends_on:
       - db
-    networks:
-      - qraps-network
+  #    networks:
+  #      - qraps-network
 
   expert:
     image: baram987/expert:latest
     container_name: expert
     ports:
       - "5001:5001"
-    networks:
-      - qraps-network
+  #    networks:
+  #      - qraps-network
 
   db:
     image: mysql
@@ -36,10 +36,10 @@ services:
       - ./database/mysql:/var/lib/mysql
     #      - ./database/config:/etc/mysql
     #      - ./database/mysql-files:/var/lib/mysql-files
-    networks:
-      - qraps-network
+#    networks:
+#      - qraps-network
 
 
-networks:
-  qraps-network:
-    driver: bridge
+#networks:
+#  qraps-network:
+#    driver: bridge

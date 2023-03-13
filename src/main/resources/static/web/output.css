@@ -175,6 +175,24 @@ table {
   /* 3 */
 }
 
+/* Biz logic */
+.pdf-generation {
+  border-width: 0 !important;
+  background-color: transparent !important;
+}
+
+.pdf-generation > th {
+  border-bottom-width: 1px !important;
+  border-right-width: 1px !important;
+}
+
+.pdf-generation > td {
+  border-bottom-width: 1px !important;
+  border-right-width: 1px !important;
+}
+
+
+
 /*
 1. Change the font styles in all browsers.
 2. Remove the margin in Firefox and Safari.
