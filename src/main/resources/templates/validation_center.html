@@ -1,23 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>검증 센터</title>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"/>
     <link rel="stylesheet" th:href="@{/web/output.css}">
 </head>
 
-<body>
-
+<body class="min-w-[678px]">
 <!--nav-->
 <nav class="lg:h-[100px] h-[80px] flex items-center">
-
-    <div class="lg:px-[100px] px-[50px] my-auto w-full flex justify-between ">
+    <div class="lg:px-[100px] px-[50px] my-auto w-full flex justify-between">
         <a th:href="@{/main}">
-            <img th:src="@{/web/images/logo.svg}" alt="로고이미지">
+            <img th:src="@{/web/images/logo.svg}" alt="로고이미지"/>
         </a>
         <section class="flex gap-[60px]">
             <a class="block leading-10 h-[40px]" th:href="@{/business}">사업분야</a>
@@ -27,55 +25,125 @@
 </nav>
 
 <main class="w-full h-fit relative">
-    <section class="lg:h-[80px] h-[70px] lg:px-[100px] px-[50px] flex"
-             style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);">
+    <section class="lg:h-[80px] h-[70px] lg:px-[100px] px-[50px] flex" style="
+          background: linear-gradient(
+              180deg,
+              rgba(24, 123, 215, 0) 0%,
+              rgba(24, 123, 215, 0.8) 100%
+            ),
+            #00a0e9;
+          box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        ">
         <h1 class="text-white text-xl my-auto">설계 검증</h1>
     </section>
 
     <section class="h-[70vh] w-full lg:px-[100px] px-[50px]">
-        <!-- <form action="./validation_result.html" method="get"
-            class="h-full w-full flex flex-col justify-center items-start gap-7"> -->
-        <form th:action="@{/review/direct}" th:object="${reviewDto}" method="post" enctype="multipart/form-data"
+        <form th:action="@{/review/expert}" th:object="${reviewDto}" method="post" enctype="multipart/form-data"
               class="h-full w-full flex flex-col justify-center items-start">
-
             <label for="validTarget" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">검증 대상
                 선택</label>
             <select id="validTarget" th:name="validTarget"
-                    onchange="findByPartNo()"
+                    onchange="onValidTargetChange()"
                     class="mb-7 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>검증 대상을 선택하세요.</option>
+                <option>검증 대상을 선택하세요.</option>
                 <option th:each="target : ${targets}" th:value="${target}"
-                        th:text="${target.getDescription()}"></option>
+                        th:text="${target.getDescription()}"
+                ></option>
             </select>
 
-
-            <label for="partNo"
-                   class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Part#</label>
+            <!--                        onclick="findByPartNo()"-->
+            <label for="partNo" class="block mb-2 text-xl font-semibold text-gray-900 dark:text-white">Part#</label>
             <div class="w-full flex mb-7 gap-5 items-center">
                 <select id="partNo"
+                        onchange="clearFileInput()"
+                        onclick="findPartNosByValidTarget()"
                         th:name="partNo"
                         class="bg-gray-50 border flex-1 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected>번호를 선택하세요.</option>
-                    <!--                ReviewPageDTO의 partNo 설정-->
+                    <option>번호를 선택하세요.</option>
+                    <!--                    <option th:value="${reviewDto.partNo}"></option>-->
+
                     <input type="hidden" id="reviewDto_partNo" th:value="${reviewDto.partNo}">
                 </select>
+                <!--                    <option>번호를 선택하세요.</option>-->
+                <!--                    <option th:value="${reviewDto.partNo}">번호를 선택하세요.</option>-->
+                <!--                ReviewPageDTO의 partNo 설정-->
 
-                <button type="button"
-                        class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">
+                <!--<button type="button"
+                        onclick="openSearchBox()"
+                        class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg w-[120px] text-sm px-5 py-2.5 focus:outline-none">
+                    검색
+                </button>-->
+
+                <!-- Modal toggle -->
+                <button data-modal-target="search-modal" data-modal-toggle="search-modal"
+                        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button">
                     검색
                 </button>
+
+                <!-- Main modal -->
+                <div id="search-modal" tabindex="-1" aria-hidden="true"
+                     class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+                    <div class="relative w-full h-full max-w-md md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <button type="button"
+                                    id="modal-close-button"
+                                    data-modal-toggle="search-modal"
+                                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                                    data-modal-hide="search-modal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                          clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="px-6 py-6 lg:px-8">
+                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Part No로 조회</h3>
+                                <div class="space-y-6">
+                                    <div>
+                                        <label for="search-partNo"
+                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Part
+                                            No
+                                            입력</label>
+                                        <input type="search-partNo" name="search-partNo" id="search-partNo"
+                                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                    </div>
+                                    <button type="button"
+                                            onclick="findPartByPartNo()"
+                                            data-modal-hide="search-modal"
+                                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        적용
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
-            <label class="block mb-2 font-semibold text-xl text-gray-900 dark:text-white" for="file_input">입력
-                파일</label>
-            <div class="mb-7 w-full">
-                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                       name="file_input" id="file_input" type="file" accept=".xls,.xlsx">
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">Excel only.</p>
+            <label class="block mb-2 font-semibold text-xl text-gray-900 dark:text-white" for="file_input">입력 파일</label>
+            <div class="w-full flex gap-5 items-center">
+                <input
+                        class="flex-1 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        name="file_input" id="file_input" type="file" accept=".xls,.xlsx"/>
+
+                <!--                <a th:href="@{/validation_page_1}">-->
+                <!--                </a>-->
+                <button type="button"
+                        onclick="onClickedDirectTemplate()"
+                        class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg w-[120px] text-sm px-5 py-2.5 focus:outline-none">
+                    직접입력
+                </button>
             </div>
 
             <div class="w-full flex justify-center">
                 <button type="submit"
+                        onclick="saveSelectedField()"
                         class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     제출하기
                     <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -86,56 +154,172 @@
                     </svg>
                 </button>
             </div>
-
         </form>
-
     </section>
 </main>
 
-<footer
-        style="background: linear-gradient(180deg, rgba(24, 123, 215, 0) 0%, rgba(24, 123, 215, 0.8) 100%), #00A0E9;"
-        class="h-fit text-white">
+<footer style="
+        background: linear-gradient(
+            180deg,
+            rgba(24, 123, 215, 0) 0%,
+            rgba(24, 123, 215, 0.8) 100%
+          ),
+          #00a0e9;
+      " class="h-fit text-white">
     <section class="flex justify-around py-10 px-10">
         <h3 class="text-2xl">CONTACT US</h3>
         <article class="flex flex-col">
             <a href="tel:+032-326-0213">032-326-0213</a>
             <a href="mailto:yblee@qraps.co.kr">chkim@qraps.co.kr</a>
-            <address>
-                인천광역시 부평구 여우재로26번길 28-13
-            </address>
+            <address>인천광역시 부평구 여우재로26번길 28-13</address>
         </article>
     </section>
-    <hr>
+    <hr/>
     <section class="px-10 py-5 text-center">
         ⓒ QRAPS 2022. All rights reserved.
     </section>
 </footer>
 <script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
+<script th:src="@{/web/env.js}"></script>
 <script th:inline="javascript" type="text/javascript">
+
+    // const BASE_URL = `http://localhost:8080`;
+    // const BASE_URL = `http://kws7.kangnam.ac.kr:8080`;
     console.log(`Script loaded!`)
 
-    async function findByPartNo() {
+    function saveSelectedField() {
+        const partNo = document.getElementById('partNo').value;
+        const validTarget = document.getElementById('validTarget').value;
+
+        sessionStorage.setItem('validTarget', validTarget);
+        sessionStorage.setItem('partNo', partNo);
+    }
+
+    function clearFileInput() {
+        document.getElementById('file_input').value = '';
+    }
+
+
+    /** 페이지 로딩시
+     *  이전에 선택한 옵션들이 없으면
+     *  기본 옵션 선택
+     *  뒤로가기 등으로 이전에 선택한 옵션이 있으면
+     *  이전 항목 선택 */
+    window.onload = function () {
+        const validTargetElement = document.getElementById('validTarget');
+        const partNoElement = document.getElementById('partNo');
+
+        const target = sessionStorage.getItem('validTarget');
+        const partNo = sessionStorage.getItem('partNo');
+
+        if (!target) {
+            validTargetElement.value = validTargetElement.options[0].value;
+        } else {
+            validTargetElement.value = target;
+        }
+
+        if (!partNo) {
+            partNoElement.value = partNoElement.options[0].value;
+        } else {
+            // Set the value of the partNo select element
+            const option = document.createElement("option");
+            option.value = partNo;
+            option.text = partNo;
+            option.selected = true;
+            partNoElement.add(option);
+        }
+    }
+
+    function onValidTargetChange() {
+        findPartNosByValidTarget();
+        clearFileInput();
+    }
+
+
+    async function onClickedDirectTemplate() {
+        console.log(`On clicked`);
+        const validTarget = document.getElementById("validTarget").value;
+        const partNo = document.getElementById("partNo").value;
+        console.log(`partno target`, partNo);
+
+        console.log(`target: `, validTarget);
+
+        const url = new URL(`${BASE_URL}/template`);
+        const body = JSON.stringify({
+            validTarget,
+            partNo
+        });
+
+        try {
+
+            const response = await fetch(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST',
+                body
+            });
+            if (response.redirected) {
+                saveSelectedField();
+                window.location.href = response.url;
+            }
+        } catch (e) {
+            console.log(`Catch error:`, err);
+            alert(err)
+
+        }
+
+
+    }
+
+    async function findPartByPartNo() {
+        const partNoString = document.getElementById('search-partNo').value;
+        const url = new URL(`${BASE_URL}/review/target`);
+        url.searchParams.set('partNo', partNoString);
+
+        const {validTarget, partNo} = await fetch(url).then(res => res.json());
+        console.log(validTarget, partNo)
+
+        const validTargetElement = document.getElementById('validTarget');
+        validTargetElement.value = validTarget;
+
+        const partNoItemListElement = document.getElementById("partNo");
+        partNoItemListElement.innerHTML = "";
+
+        const option = document.createElement("option");
+        option.value = partNo;
+        option.text = partNo;
+        option.selected = true;
+        partNoItemListElement.appendChild(option);
+
+
+        saveSelectedField();
+        const closeButton = document.getElementById('modal-close-button');
+        console.log(`before modal hide`);
+        closeButton.click();
+        console.log(`after modal hide`);
+    }
+
+    async function findPartNosByValidTarget() {
         const selectedTarget = document.getElementById("validTarget").value;
+        const partNoItemListElement = document.getElementById("partNo");
+        const prevSelected = partNoItemListElement?.value;
 
-        // dev url
-        // const url = 'http://localhost:8080/review/partlist';
-        // production url
-        const url = 'http://kws7.kangnam.ac.kr/review/partlist';
 
+        const url = `${BASE_URL}/review/partlist`;
         const API_URL = new URL(url);
         API_URL.searchParams.set('validateTarget', selectedTarget)
 
 
         const partList = await fetch(API_URL).then(res => res.json());
-        const partNoItemListElement = document.getElementById("partNo");
         partNoItemListElement.innerHTML = "";
-
         partList.forEach(part => {
             const partNo = part.partNo;
-
             const option = document.createElement("option");
             option.value = partNo;
             option.text = partNo;
+            option.selected = partNo === prevSelected;
+
             partNoItemListElement.appendChild(option);
         });
     }

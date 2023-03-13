@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SDIC 검증</title>
+    <title>검증</title>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.5/dist/flowbite.min.css"/>
     <link rel="stylesheet" th:href="@{/web/output.css}">
-
 </head>
 
 <body class="min-w-[678px] overflow-scroll">
@@ -38,7 +37,7 @@
         <h1 class="text-white text-xl my-auto">검증</h1>
     </section>
 
-    <div th:object="${sdic}" id="pdf-section" class="flex flex-col gap-[10px] my-5 items-center">
+    <div th:object="${diode}" id="pdf-section" class="flex flex-col gap-[10px] my-5 items-center">
         <h2>Check Component</h2>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -54,13 +53,14 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row"
                         id="partNo"
-                        th:text="${sdic.getPartNo()}"
-                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    ></th>
-                    <td class="px-6 py-4 border-r" id="manufacturer_name" th:text="${sdic.getManufacturer_name()}">3
+                        th:text="${diode.getPartNo()}"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                    </th>
+                    <td class="px-6 py-4 border-r" id="manufacturer_name" th:text="${diode.getManufacturer_name()}">
                     </td>
-                    <td class="px-6 py-4 border-r"></td><!-- Application-->
-                    <td class="px-6 py-4"></td><!-- Step-->
+                    <td class="px-6 py-4 border-r">Mobile</td>
+                    <td class="px-6 py-4">DR 0</td>
                 </tr>
                 </tbody>
             </table>
@@ -69,12 +69,12 @@
         <!--        placeholder-->
         <div class="bg-gray-50 w-[70%] h-[600px] flex">
             <div class="w-[50%] h-full"><img
-                    th:src="@{${urlHelper.getImageUrl(sdic.getPackage_type())}}" alt="image"
+                    th:src="@{${urlHelper.getImageUrl(diode.getPackage_type())}}" alt="image"
                     onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';"
                     class="h-full" style="object-fit: cover; object-position: center;">
             </div>
             <div class="w-[50%] h-full"><img
-                    th:src="@{${urlHelper.getImageUrl(sdic.getPicture1())}}" alt="image"
+                    th:src="@{${urlHelper.getImageUrl(diode.getPicture1())}}" alt="image"
                     onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';"
                     class="h-full" style="object-fit: cover; object-position: center;">
             </div>
@@ -117,8 +117,8 @@
                     </td>
                     <td contenteditable="true" id="oprating_temperature_max" class="data-input px-6 py-4 border-r">
                     </td>
-                    <td th:text="${sdic.oprating_temperature_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.oprating_temperature_max}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.oprating_temperature_min}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.oprating_temperature_max}" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -127,8 +127,8 @@
                     <td class="unit px-6 py-4 border-r">℃</td>
                     <td contenteditable="true" id="storage_temperature_min" class="data-input px-6 py-4 border-r"></td>
                     <td contenteditable="true" id="storage_temperature_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.storage_temperature_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.storage_temperature_max}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.storage_temperature_min}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.storage_temperature_max}" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -137,8 +137,8 @@
                     <td class="unit px-6 py-4 border-r">℃</td>
                     <td contenteditable="true" id="juction_temperature_min" class="data-input px-6 py-4 border-r"></td>
                     <td contenteditable="true" id="juction_temperature_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.juction_temperature_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.juction_temperature_max}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.juction_temperature_min}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.juction_temperature_max}" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -149,21 +149,24 @@
                     </th>
                     <td class="px-6 py-4 border-r">전압</td>
                     <td class="unit px-6 py-4 border-r">VDC</td>
-                    <td contenteditable="true" id="input_voltage_min" class="data-input px-6 py-4 border-r"></td>
-                    <td contenteditable="true" id="input_voltage_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.input_voltage_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.input_voltage_max}" class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" id="forward_current_max" class="data-input px-6 py-4 border-r"></td>
+                    <!--                    <td contenteditable="true" class="data-input px-6 py-4 border-r"></td>-->
+                    <td contenteditable="true" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.forward_current_max}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.non_repated_peak_Surge_current_max}" class="px-6 py-4 border-r"></td>
+                    <!--                    <td class="px-6 py-4 border-r"></td>-->
+                    <!--                    <td class="needValidate px-6 py-4 border-r"></td> &lt;!&ndash; 적용여부&ndash;&gt;-->
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-6 py-4 border-r">전류</td>
-                    <td class="unit px-6 py-4 border-r">A</td>
+                    <td class="px-6 py-4 border-r">A</td>
                     <td class="px-6 py-4 border-r"></td>
                     <td class="px-6 py-4 border-r"></td>
                     <td class="px-6 py-4 border-r"></td>
                     <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td> <!-- 적용여부-->
+                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -173,31 +176,38 @@
                     </th>
                     <td class="px-6 py-4 border-r">전압</td>
                     <td class="unit px-6 py-4 border-r">VDC</td>
-                    <td contenteditable="true" id="output_voltage_min" class="data-input px-6 py-4 border-r"></td>
-                    <td contenteditable="true" id="output_voltage_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.output_voltage_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.output_voltage_max}" class="px-6 py-4 border-r"></td>
+                    <!--                    <td contenteditable="true" id="" class="data-input px-6 py-4 border-r">-->
+                    <td class="data-input px-6 py-4 border-r"> <!--Output 전압-->
+
+                    </td>
+                    <td contenteditable="true" id="peak_repetitive_reverse_voltage_max"
+                        class="data-input px-6 py-4 border-r">
+                    </td>
+                    <td th:text="${diode.voltage_rate_of_change}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.peak_repetitive_reverse_voltage_max}" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-6 py-4 border-r">전류</td>
                     <td class="unit px-6 py-4 border-r">A</td>
-                    <td contenteditable="true" id="output_current_min" class="data-input px-6 py-4 border-r"></td>
-                    <td contenteditable="true" id="output_current_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.output_current_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.output_current_max}" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
+                    <td contenteditable="true" class="data-input px-6 py-4 border-r"></td>
+                    <td contenteditable="true" class="data-input px-6 py-4 border-r"></td>
+                    <!--                    <td th:text="${diode.capacitance_typ}" class="px-6 py-4 border-r"></td>-->
+                    <!--                    <td th:text="${diode.capacitance_max}" class="px-6 py-4 border-r"></td>-->
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-6 py-4 border-r">정격전력</td>
-                    <td class="unit px-6 py-4 border-r">W</td>
+                    <td class="px-6 py-4 border-r">W</td>
                     <td class="px-6 py-4 border-r"></td>
                     <td class="px-6 py-4 border-r"></td>
                     <td class="px-6 py-4 border-r"></td>
                     <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td> <!-- 적용여부-->
+                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 </tbody>
@@ -225,7 +235,7 @@
                     <td class="px-6 py-4 border-r">Type *1</td>
                     <td class="unit px-6 py-4 border-r">Model</td>
                     <td contenteditable="true" id="type" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.type}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.type}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" id="type-needValidate" class="needValidate px-6 py-4 border-r"></td>
                     <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
@@ -234,8 +244,9 @@
                     <td class="px-6 py-4 border-r">MSL</td>
                     <td class="unit px-6 py-4 border-r">Level</td>
                     <td contenteditable="true" id="reliability_msl" colspan="2" class="data-input px-6 py-4 border-r">
+
                     </td>
-                    <td th:text="${sdic.reliability_msl}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.reliability_msl}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -244,7 +255,7 @@
                     <td class="unit px-6 py-4 border-r">유/무</td>
                     <td contenteditable="true" id="reliability_rohs" colspan="2" class="data-input px-6 py-4 border-r">
                     </td>
-                    <td th:text="${sdic.reliability_rohs}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.reliability_rohs}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -253,9 +264,9 @@
                     <td class="unit px-6 py-4 border-r">유/무</td>
                     <td contenteditable="true" id="reliability_pbf" colspan="2" class="data-input px-6 py-4 border-r">
                     </td>
-                    <td th:text="${sdic.reliability_pbf}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.reliability_pbf}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4 "></td>
+                    <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-6 py-4 border-r">Halogen Free</td>
@@ -263,7 +274,7 @@
                     <td contenteditable="true" id="reliability_halogen_free" colspan="2"
                         class="data-input px-6 py-4 border-r">
                     </td>
-                    <td th:text="${sdic.reliability_halogen_free}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.reliability_halogen_free}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -287,87 +298,82 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" colspan="2"
                         class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Drop Voltage *2
+                        Forward Voltage *2
                     </th>
                     <td class="unit px-6 py-4 border-r">V</td>
-                    <td contenteditable="true" id="dropout_voltage_min" class="data-input px-6 py-4 border-r"></td>
-                    <td contenteditable="true" id="dropout_voltage_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.dropout_voltage_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.dropout_voltage_max}" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" colspan="2"
                         class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Quiescent Current *3
+                        Voltage Change Rate
                     </th>
-                    <td class="unit px-6 py-4 border-r">A</td>
-                    <td contenteditable="true" id="quiescent_current_min" class="data-input px-6 py-4 border-r"></td>
-                    <td contenteditable="true" id="quiescent_current_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.quiescent_current_min}" class="px-6 py-4 border-r"></td>  <!-- min, typ?-->
-                    <td th:text="${sdic.quiescent_current_max}" class="px-6 py-4 border-r"></td> <!-- 현재 min, max 적용-->
+                    <td class="unit px-6 py-4 border-r">V/us</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" id="voltage_rate_of_change" class="data-input px-6 py-4 border-r">
+
+                    </td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.voltage_rate_of_change}" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" colspan="2"
                         class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Efficiency *4
+                        Non-repetitive Peak Reverse Voltage
                     </th>
-                    <td class="unit px-6 py-4 border-r">uA</td>
-                    <td contenteditable="true" id="efficiency_min" class="data-input px-6 py-4 border-r"></td>
-                    <td contenteditable="true" id="efficiency_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.efficiency_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.efficiency_max}" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" colspan="2"
-                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Current limit
-                    </th>
-                    <td class="unit px-6 py-4 border-r">A</td>
-                    <td contenteditable="true" id="current_limit_min" class="data-input px-6 py-4 border-r"></td>
-                    <td contenteditable="true" id="current_limit_max" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.current_limit_min}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.current_limit_max}" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r" colspan="2">Output Voltage Tolerance</td>
-                    <td class="unit px-6 py-4 border-r">%</td>
-                    <td contenteditable="true" id="output_voltage_tolerance_minus"
+                    <td class="unit px-6 py-4 border-r">V</td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" id="peak_reverse_voltage_max"
                         class="data-input px-6 py-4 border-r">
                     </td>
-                    <td contenteditable="true" id="output_voltage_tolerance_plus" class="data-input px-6 py-4 border-r">
-                    </td>
-                    <td th:text="${sdic.output_voltage_tolerance_minus}" class="px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.output_voltage_tolerance_plus}" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.peak_reverse_voltage_max}"
+                        class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r" rowspan="2">Level</td>
-                    <td class="px-6 py-4 border-r">VIL</td>
-                    <td class="unit px-6 py-4 border-r">V</td>
+                    <th scope="row" colspan="2"
+                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Non-repetitive Peak Surge Current *3
+                    </th>
+                    <td class="unit px-6 py-4 border-r">A</td>
                     <td class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" id="non_repated_peak_Surge_current_max" class="px-6 py-4 border-r">
+                    </td>
                     <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td> <!-- 적용여부-->
+                    <td th:text="${diode.non_repated_peak_Surge_current_max}" class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">VIH</td>
-                    <td class="unit px-6 py-4 border-r">V</td>
+                    <td colspan="2" class="px-6 py-4 border-r">Capacitance</td>
+                    <td class="px-6 py-4 border-r">pF</td>
+                    <td contenteditable="true" id="capacitance_min" class="px-6 py-4 border-r">
+                    </td>
+                    <td contenteditable="true" id="capacitance_max" class="px-6 py-4 border-r">
+                    </td>
+                    <td th:text="${diode.capacitance_min}" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.capacitance_max}" class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
+                    <td class="px-6 py-4"></td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td colspan="2" class="px-6 py-4 border-r">Reverse Recovery Time</td>
+                    <td class="unit px-6 py-4 border-r">ns</td>
                     <td class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" id="reverse_recovery_time" class="px-6 py-4 border-r">
+                    </td>
                     <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td>
-                    <td class="px-6 py-4 border-r"></td> <!-- 적용여부-->
+                    <td th:text="${diode.reverse_recovery_time}" class="px-6 py-4 border-r"></td>
+                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 </tbody>
@@ -375,18 +381,16 @@
         </div>
         <!--        placeholder-->
         <div class="grid grid-cols-2 gap-5 bg-gray-50 w-[70%] h-[600px]">
-            <div><img th:src="@{${urlHelper.getImageUrl(sdic.getPicture2())}}" alt="image"
+            <div><img th:src="@{${urlHelper.getImageUrl(diode.getPicture2())}}" alt="image"
                       onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';" class="h-full"
                       style="object-fit: cover; object-position: center;"></div>
-            <div><img th:src="@{${urlHelper.getImageUrl(sdic.getPicture3())}}" alt="image"
+            <div><img th:src="@{${urlHelper.getImageUrl(diode.getPicture3())}}" alt="image"
                       onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';" class="h-full"
                       style="object-fit: cover; object-position: center;"></div>
-            <div><img th:src="@{${urlHelper.getImageUrl(sdic.getPicture4())}}" alt="image"
-                      onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';" class="h-full"
-                      style="object-fit: cover; object-position: center;"></div>
-            <div><img th:src="@{${urlHelper.getImageUrl(sdic.getPicture5())}}" alt="image"
-                      onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';" class="h-full"
-                      style="object-fit: cover; object-position: center;"></div>
+            <!--            <div><img alt="image" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';" class="h-full"-->
+            <!--                      style="object-fit: cover; object-position: center;"></div>-->
+            <!--            <div><img alt="image" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';" class="h-full"-->
+            <!--                      style="object-fit: cover; object-position: center;"></div>-->
         </div>
         <h2>5. Pin Function</h2>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-[70%]">
@@ -403,68 +407,25 @@
                 </thead>
                 <tbody>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" rowspan="3"
+                    <th scope="row" colspan="2"
                         class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Protection
+                        Pin Number
                     </th>
-                    <td class="px-6 py-4 border-r">OVP</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td colspan="2" class="px-6 py-4 border-r"></td>
-                    <td colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">OTP</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td contenteditable="true" id="thermal_shutdown_typ" colspan="2"
-                        class="data-input px-6 py-4 border-r">
+                    <td class="unit px-6 py-4 border-r">Pin</td>
+                    <td contenteditable="true" id="package_pin_num" colspan="2" class="data-input px-6 py-4 border-r">
+
                     </td>
-                    <td th:text="${sdic.thermal_shutdown_typ}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.package_pin_num}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">OCP</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td colspan="2" class="px-6 py-4 border-r"></td>
-                    <td colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" rowspan="4"
-                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Pin Protection
-                    </th>
-                    <td class="px-6 py-4 border-r">Enable</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td contenteditable="true" id="enable" colspan="2" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.enable}" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">Feed Back</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td contenteditable="true" id="feedback" colspan="2" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.feedback}" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">Adjustable</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td contenteditable="true" id="boot" colspan="2" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.boot}" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">GND Pad</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td contenteditable="true" id="pad" colspan="2" class="data-input px-6 py-4 border-r"></td>
-                    <td th:text="${sdic.pad}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td colspan="2" class="px-6 py-4 border-r">Diode Quantity</td>
+                    <td class="unit px-6 py-4 border-r">개</td>
+                    <td contenteditable="true" id="diode_quantity" colspan="2" class="data-input px-6 py-4 border-r">
+
+                    </td>
+                    <td th:text="${diode.diode_quantity}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -488,59 +449,12 @@
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" rowspan="2"
                         class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        ESD
-                    </th>
-                    <td class="px-6 py-4 border-r">HBM</td>
-                    <td class="unit px-6 py-4 border-r">kV</td>
-                    <td contenteditable="true" id="reliability_esd_hbm_plus" colspan="2"
-                        class="data-input px-6 py-4 border-r">
-                    </td>
-                    <td th:text="${sdic.reliability_esd_hbm_plus}" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">ODM</td>
-                    <td class="unit px-6 py-4 border-r">kV</td>
-                    <td contenteditable="true" id="reliability_esd_cdm_plus" colspan="2"
-                        class="data-input px-6 py-4 border-r">
-                    </td>
-                    <td th:text="${sdic.reliability_esd_cdm_plus}" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" rowspan="2"
-                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Reliability
-                    </th>
-                    <td class="px-6 py-4 border-r">Surge</td>
-                    <td class="unit px-6 py-4 border-r">kV</td>
-                    <td contenteditable="true" id="reliability_surge" colspan="2" class="data-input px-6 py-4 border-r">
-                    </td>
-                    <td th:text="${sdic.reliability_surge}" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="px-6 py-4 border-r">EFT</td>
-                    <td class="unit px-6 py-4 border-r">kV</td>
-                    <td contenteditable="true" id="reliability_eft" colspan="2" class="data-input px-6 py-4 border-r">
-                    </td>
-                    <td th:text="${sdic.reliability_eft}" colspan="2" class="px-6 py-4 border-r"></td>
-                    <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
-                    <td class="px-6 py-4"></td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row"
-                        class="px-6 py-4 border-r font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         Qualified
                     </th>
                     <td class="px-6 py-4 border-r">AEC</td>
-                    <td class="unit px-6 py-4 border-r">유/무</td>
-                    <td contenteditable="true" id="reliability_aec" colspan="2" class="data-input px-6 py-4 border-r">
-                    </td>
-                    <td th:text="${sdic.reliability_aec}" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td class="px-6 py-4 border-r">유/무</td>
+                    <td contenteditable="true" id="reliability_aec_q101" colspan="2" class="px-6 py-4 border-r"></td>
+                    <td th:text="${diode.reliability_aec_q101}" colspan="2" class="px-6 py-4 border-r"></td>
                     <td contenteditable="true" class="needValidate px-6 py-4 border-r"></td> <!-- 적용여부-->
                     <td class="px-6 py-4"></td>
                 </tr>
@@ -584,14 +498,13 @@
     </section>
 </footer>
 
-<script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 <script th:src="@{/web/env.js}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://unpkg.com/flowbite@1.5.5/dist/flowbite.js"></script>
 <script>
     console.log('load script');
 
     async function saveAndVerify() {
+
         const partNo = document.getElementById('partNo').textContent;
         const partNoField = {
             partName: "partNo",
@@ -617,6 +530,7 @@
             designValue: type,
             needValidate: isTypeNeedValidate === 'o' ? 'o' : null,
         }
+
 
         const excelHeaderRowFields = [partNoField, manufacturerNameField, typeField];
         let excelRowFields = [];
@@ -648,15 +562,15 @@
 
                 excelRowFields.push(field);
             }
+
         }
-        console.log(excelRowFields);
 
 
         const url = new URL(`${BASE_URL}/save/excel`);
 
         const body = JSON.stringify({
             partNo,
-            validateTarget: 'IC',
+            validateTarget: 'DIODE',
             excelHeaderRowFields,
             excelRowFields
         });
@@ -669,16 +583,13 @@
             body
         }).catch(err => console.error(err));
 
-        console.log(`status: `, response.status);
 
         if (response.redirected) {
             window.location.href = response.url;
         } else {
             console.log("no redir");
         }
-
     }
-
 
 </script>
 </body>
